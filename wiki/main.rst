@@ -6,6 +6,6 @@ Bu dokumanda basit seviyede dağıtım hazırlamak için temel adımlar anlatıl
 
 Kaynak ve dokümanlarımız yansılarımız:
 
-* Bu sitedeki bilgilerin pdf kitap hali için `tıklayınız. <https://bayramkarahan.github.io/distro>`_
+* Bu sitedeki bilgilerin pdf kitap hali için `tıklayınız. <https://bayramkarahan.github.io/distro-wiki/kitap/>`_
 * https://github.com/disro-wiki
 * https://github.com/disro
