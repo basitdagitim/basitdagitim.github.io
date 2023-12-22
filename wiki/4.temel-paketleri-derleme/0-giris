@@ -1,0 +1,17 @@
+Temel Paketler
+==============
+
+Dağıtım temel seviyede kullanıcıya tyy ortamı sunan bir yapıdan oluşacak. Ayrıca kendini kurup grubu yükleyecek bir yapıda olmasını planlamaktayız. Dağıtımdaki paketleri kullanarak sistemin kurulması ve tty ortamı oluşturan bir yapıda olacak. Bu yapıda bir dağıtım için aşağıdaki paketlere ihtiyacımız olacak.
+Bunlar;
+
+1. glibc
+2. readline
+3. ncurses
+4. kmod
+5. util-linux
+6. eudev
+7. busybox
+8. e2fsprogs
+9. grub
+
+Buradaki paketler sırasıyla nasıl derleneceği ayrı başlıklar altında anlatılacaktır.
