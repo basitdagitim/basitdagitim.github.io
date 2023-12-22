@@ -137,3 +137,8 @@ Not:
 ---
 dmesg ile log kısmında eklendiğinde Hello Word yazısını ve  kaldırıldığında modul ismini görebiliriz.
 
+
+.. raw:: pdf
+
+   PageBreak
+

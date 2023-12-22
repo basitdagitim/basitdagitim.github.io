@@ -19,3 +19,9 @@ Dynamic derlenmiş bir dosyanın bağımlılıklarını **ldd** komutu kullanara
 
 Burada **libc.so.6** ve **ld-linux-x86_64.so.2** dosyaları tamamında ortaktır ve **glibc** tarafından sağlanır. 
 Dynamic derlenmiş bir dosyanın derlenmesi veya çalıştırılabilmesi için tüm bağımlılıklarının sistemde bulunması gereklidir.
+
+
+.. raw:: pdf
+
+   PageBreak
+

@@ -35,3 +35,9 @@ Bununla birlikte dosya boyutlarını aşağıdaki gibi kıyaslayabiliriz.
 	    768   main.static
 
 Gördüğünüz gibi dynamic olarak derlenmiş dosya boyut olarak çok daha küçüktür. Bu yüzden sistem içerisinde genellikle dynamic derlemeler tercih edilirken. initramfs gibi yerlerde static derleme tercih edilir.
+
+
+.. raw:: pdf
+
+   PageBreak
+

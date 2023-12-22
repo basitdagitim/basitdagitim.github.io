@@ -182,3 +182,9 @@ Bu dosyayı doldurarak açılışta hangi disklerin bağlanacağını ayarlamal�
 
 **Not:** Disk bölümü konumu yerine **UUID="<uuid-değeri>"** şeklinde yazmanızı öneririm.
 Bölüm adları değişebilirken uuid değerleri değişmez.
+
+
+.. raw:: pdf
+
+   PageBreak
+

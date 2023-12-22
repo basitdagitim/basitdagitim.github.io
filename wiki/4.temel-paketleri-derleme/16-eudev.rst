@@ -34,3 +34,8 @@ eudev derleme için hazırlama:
 make
 make install DESTDIR=$HOME/rootfs
 
+
+.. raw:: pdf
+
+   PageBreak
+

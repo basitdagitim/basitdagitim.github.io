@@ -13,3 +13,9 @@ Bir dosyanın static olup olmadığını anlamak için **ldd** komutunun hata me
 
 	$ ldd main
 	    not a dynamic executable
+	    
+	    
+.. raw:: pdf
+
+   PageBreak
+

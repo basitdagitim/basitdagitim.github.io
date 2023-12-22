@@ -8,3 +8,9 @@ Eğer /boot bölümünü ayırmayacaksanız grub yüklenirken **unknown filesyst
 
 	$ e2fsck -f /dev/sda2
 	$ tune2fs -O ^metadata_csum /dev/sda2
+	
+	
+.. raw:: pdf
+
+   PageBreak
+

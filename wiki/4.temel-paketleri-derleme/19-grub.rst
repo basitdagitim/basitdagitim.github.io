@@ -53,3 +53,9 @@ grub paketini derlemek için aşağıdaki scripti kullabilirsiniz.
 	make 
 	make install DESTDIR=$HOME/rootfs
 	cd $HOME/rootfs
+	
+	
+.. raw:: pdf
+
+   PageBreak
+

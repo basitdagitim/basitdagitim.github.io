@@ -144,3 +144,9 @@ chroot sistemde Çalışma
 
 Kaynak:
 https://stackoverflow.com/questions/64838052/how-to-delete-n-characters-appended-to-ldd-list
+
+
+.. raw:: pdf
+
+   PageBreak
+

@@ -25,3 +25,7 @@ sudo apt install debootstrap make squashfs-tools gcc wget unzip xz-utils tar zst
 
 Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyiz. Bu dokümanda sistem için kurulum dizini $HOME/rootfs olarak kullanacağız.
 
+.. raw:: pdf
+
+   PageBreak
+
