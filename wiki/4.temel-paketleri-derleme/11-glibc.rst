@@ -89,7 +89,7 @@ Hata Çözümü
 Bu aşamadan sonra **Temel Paketler** listemizde bulunan paketleri kodlarından derleyerek **$HOME/rootfs/** dağıtım dizinimize yüklemeliyiz.
 Derlemede **glibc** kütüphanesinin derlemesine benzer bir yol izlenecektir. **glibc** temel kütüphane olması ve ilk derlediğimiz paket olduğu için detaylıca anlatılmıştır.
 
-**glibc** kütüphanemizi derlerken yukarıda yapılan işlemlem adımlarını ve hata çözümlemesini bir script dosyasında yapabiliriz. Bu dokümanda altta paylaşılan script dosyası yöntemi tercih edildi. 
+**glibc** kütüphanemizi derlerken yukarıda yapılan işlem adımlarını ve hata çözümlemesini bir script dosyasında yapabiliriz. Bu dokümanda altta paylaşılan script dosyası yöntemi tercih edildi. 
 
 .. code-block:: shell
 	
@@ -114,7 +114,7 @@ Derlemede **glibc** kütüphanesinin derlemesine benzer bir yol izlenecektir. **
 	cd $HOME/rootfs/
 	ln -s lib lib64
 
-Diğer paketlerimizdede **glibc** için paylaşılan script dosyası gibi dosylar hazırlayıp derlenecektir.
+Diğer paketlerimizde de **glibc** için paylaşılan script dosyası gibi dosyalar hazırlayıp derlenecektir.
 
 .. raw:: pdf
 
