@@ -7,6 +7,7 @@ Bu sorunların çözümü için modul vardır. moduller kernele istediğimiz kod
 
 kmod Derleme
 ------------
+
 .. code-block:: shell
 	
 	# kaynak kod indirme ve derleme için hazırlama
@@ -43,12 +44,15 @@ kmod Derleme
 
 Kmod'u derleme için hazırlayın:
 -------------------------------
-./configure --prefix=/usr          \
-            --sysconfdir=/etc      \
-            --with-openssl         \
-            --with-xz              \
-            --with-zstd            \
-            --with-zlib
+
+.. code-block:: shell
+	
+	./configure --prefix=/usr          \
+		    --sysconfdir=/etc      \
+		    --with-openssl         \
+		    --with-xz              \
+		    --with-zstd            \
+		    --with-zlib
 
 
 İsteğe bağlı bağımlılıklar: - ZLIB kütüphanesi - LZMA kütüphanesi -ZSTD kütüphanesi - OPENSSL kütüphanesi (modinfo'da imza yönetimi) 
@@ -57,7 +61,22 @@ Bu seçenek Kmod'un PKCS7 imzalarını işlemesini sağlar. çekirdek modülleri
 --with-xz, --with-zlib, Ve --with-zstd
 Bu seçenekler Kmod'un sıkıştırılmış çekirdeği işlemesini sağlar modüller.
 
-Ben aşağıdaki şekilde yapılandıracağım;
+.. raw:: pdf
+
+   PageBreak
+
+Bu dokümanda  aşağıdaki şekilde yapılandırılacak;
+
+.. code-block:: shell
+	
+	./configure --prefix=/ \
+		--libdir=/lib/ \
+		--bindir=/sbin
+
+	# remove xsltproc dependency
+	   rm -f man/Makefile
+	   echo -e "all:\ninstall:" > man/Makefile
+	   
 
 kmod Araçlarını Oluşturma
 -------------------------
@@ -83,12 +102,12 @@ veya kernele modul yükleme kaldırma için kmod aracı kullanılmaktadır. kmod
 
 şeklinde sembolik bağlarla yeni araçlar oluşturulmuştur.
 
-**lsmod :** yüklü modulleri listeler
-**insmod:** tek bir modul yükler
-**rmmod:** tek bir modul siler
-**modinfo:** modul hakkında bilgi alınır 
-**modprobe:** insmod komutunun aynısı fakat daha işlevseldir. module ait bağımlı olduğu modülleride yüklemektedir. modprobe  modülü /lib/modules/ dizini altında aramaktadır.
-**depmod:** /lib/modules dizinindeki modüllerin listesini günceller. Fakat başka bir dizinde ise basedir=konum şeklinde belirtmek gerekir. konum dizininde /lib/modules/** şeklinde kalsörler olmalıdır.
+- **lsmod :** yüklü modulleri listeler
+- **insmod:** tek bir modul yükler
+- **rmmod:** tek bir modul siler
+- **modinfo:** modul hakkında bilgi alınır 
+- **modprobe:** insmod komutunun aynısı fakat daha işlevseldir. module ait bağımlı olduğu modülleride yüklemektedir. modprobe  modülü /lib/modules/ dizini altında aramaktadır.
+- **depmod:** /lib/modules dizinindeki modüllerin listesini günceller. Fakat başka bir dizinde ise basedir=konum şeklinde belirtmek gerekir. konum dizininde /lib/modules/** şeklinde kalsörler olmalıdır.
 
 kmod Test Edilmesi
 ------------------
