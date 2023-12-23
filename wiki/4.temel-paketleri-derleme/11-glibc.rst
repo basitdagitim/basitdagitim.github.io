@@ -5,55 +5,26 @@ glibc (GNU C Kütüphane) Linux sistemlerinde kullanılan bir C kütüphanesidir
 
 glibc, birçok standart C işlevini içerir ve bu işlevler, bellek yönetimi, dosya işlemleri, dize işlemleri, ağ işlemleri ve daha fazlası gibi çeşitli görevleri yerine getirmek için kullanılabilir. Bu kütüphane, Linux sistemlerinde yazılım geliştirme sürecini kolaylaştırır ve programcılara güçlü bir araç seti sunar.
 
-glibc, genellikle C programları için kullanılan standart bir kütüphanedir. Bir C programı yazarken, glibc işlevlerini kullanarak bellek yönetimi, dosya işlemleri, dize işlemleri ve diğer işlemleri gerçekleştirebilirsiniz. Örneğin, bir dosyayı açmak ve okumak için fopen ve fread işlevlerini kullanabilirsiniz.
-
-Aşağıda, glibc kullanarak basit bir C programının nasıl yazılacağına dair bir örnek bulunmaktadır:
-
-#include<stdio.h>
-void main()
-{
-puts("Merhaba Dünya");
-}
-
-Bu örnekte, ekrana "Merhaba Dünya" yazacaktır.
 glibc, Linux sistemlerinde C programlama dilini kullanarak yazılım geliştirmek için önemli bir araçtır. Bu kütüphane, Linux'ta çalışan birçok programın temelini oluşturur ve geliştiricilere güçlü bir platform sunar.
-
-Bu programı Derleyelim.
-gcc -o merhaba merhaba.c 
-
-Derlediğimiz merhaba ikili dosyasını aşağıda glibc kütüphanemizi derleyip derlenen kütüphaneler üzerinde çalıştıracağız.
 
 glibc Derleme
 -------------
 
-# Ev dizinine geçiyorum.
-cd $HOME/
+.. code-block:: shell
 
-# glibc kaynak kodunu indiriyoruz.
-
-wget https://ftp.gnu.org/gnu/libc/glibc-2.38.tar.gz
-
-# glibc kaynak kodunu açıyoruz.
-
-tar -xvf glibc-2.38.tar.gz
-
-# glibc derlemek için bir derleme dizini oluşturuyoruz.
- 
-mkdir build-glibc && cd build-glibc
-
-# Derleme ayarları yapılıyor
-../glibc-2.38/configure --prefix=/ --disable-werror
-
-# glibc derleyelim.
-make 
-#hata olursa
-make -j2 CFLAGS="-U_FORTIFY_SOURCE -O2 -fno-stack-protector"
+	cd $HOME/ # Ev dizinine geçiyorum.
+	wget https://ftp.gnu.org/gnu/libc/glibc-2.38.tar.gz # glibc kaynak kodunu indiriyoruz.
+	tar -xvf glibc-2.38.tar.gz # glibc kaynak kodunu açıyoruz.
+	mkdir build-glibc && cd build-glibc # glibc derlemek için bir derleme dizini oluşturuyoruz.
+	../glibc-2.38/configure --prefix=/ --disable-werror # Derleme ayarları yapılıyor
+	make # glibc derleyelim.
 
 glibc Yükleme
 -------------
-# Ev Dizinindeki rootfs dizinine glibc yükleyelim.
 
-make install DESTDIR=$HOME/rootfs
+.. code-block:: shell
+
+	make install DESTDIR=$HOME/rootf # Ev Dizinindeki rootfs dizinine glibc yükleyelim.
 
 glibc Test Etme
 ---------------
@@ -62,33 +33,88 @@ glibc kütüphanemizi **$HOME/rootfs** komununa yükledik. Şimdi bu kütüphane
 
 Aşağıdaki c kodumuzu derleyelim ve **$HOME/rootfs** konumuna kopyalayalım.
 
-#include<stdio.h>
-void main()
-{
-puts("Merhaba Dünya");
-}
 
-# Bu programı Derleyelim.
-gcc -o merhaba merhaba.c 
+.. code-block:: shell
 
-# derlenen merhaba ikili dosyası $HOME/rootfs/ konumuna kopyalandı.
-cp merhaba $HOME/rootfs/merhaba
+	#include<stdio.h>
+	void main()
+	{
+	puts("Merhaba Dünya");
+	}
 
-# **$HOME/rootfs/** konumundaki glibc yüklü konuma **chroot** ile dosyamızı çalıştıralım.
+Program Derleme
+.................
+
+.. code-block:: shell
+	
+	gcc -o merhaba merhaba.c 
+
+Program Yükleme
+...............
+
+Derlenen çalışabilir merhaba dosyamızı **glibc** kütüphanemizin olduğu dizine yükleyelim. 
+
+.. code-block:: shell
+	
+	cp merhaba $HOME/rootfs/merhaba # derlenen merhaba ikili dosyası $HOME/rootfs/ konumuna kopyalandı.
+
+Programı Test Etme
+..................
+
+**glibc** kütüphanemizin olduğu dizin dağıtımızın ana dizini oluyor.  **$HOME/rootfs/** konumuna **chroot** ile erişelim.
+
 Aşağıdaki gibi bir hata alacağız.
 
-sudo chroot $HOME/rootfs/ /merhaba
-chroot: failed to run command ‘/merhaba’: No such file or directory
+.. code-block:: shell
 
-# üstteki hatanın çözümü sembolik bağ oluşturmak.
-cd $HOME/rootfs/
-ln -s lib lib64
+	sudo chroot $HOME/rootfs/ /merhaba
+	chroot: failed to run command ‘/merhaba’: No such file or directory
+Hata Çözümü
+...........
+
+.. code-block:: shell
+	
+	# üstteki hatanın çözümü sembolik bağ oluşturmak.
+	cd $HOME/rootfs/
+	ln -s lib lib64
 
 #merhaba dosyamızı tekrar chroot ile çalıştıralım. Aşağıda görüldüğü gibi hatasız çalışacaktır.
-sudo chroot rootfs /merhaba
-Merhaba Dünya
 
+.. code-block:: shell
+	
+	sudo chroot rootfs /merhaba
+	Merhaba Dünya
 
+**Merhaba Dünya** mesajını gördüğümüzde glibc kütüphanemizin  ve merhaba çalışabilir dosyamızın çalıştığını anlıyoruz. 
+Bu aşamadan sonra **Temel Paketler** listemizde bulunan paketleri kodlarından derleyerek **$HOME/rootfs/** dağıtım dizinimize yüklemeliyiz.
+Derlemede **glibc** kütüphanesinin derlemesine benzer bir yol izlenecektir. **glibc** temel kütüphane olması ve ilk derlediğimiz paket olduğu için detaylıca anlatılmıştır.
+
+**glibc** kütüphanemizi derlerken yukarıda yapılan işlemlem adımlarını ve hata çözümlemesini bir script dosyasında yapabiliriz. Bu dokümanda altta paylaşılan script dosyası yöntemi tercih edildi. 
+
+.. code-block:: shell
+	
+	# kaynak kod indirme ve derleme için hazırlama
+	version="2.38"
+	name="glibc"
+	mkdir -p $HOME/distro
+	cd $HOME/distro
+	rm -rf ${name}-${version}
+	rm -rf build-${name}-${version}
+	wget https://ftp.gnu.org/gnu/libc/${name}-${version}.tar.gz
+	tar -xvf ${name}-${version}.tar.gz
+	mkdir build-${name}-${version}
+	cd build-${name}-${version}
+	../${name}-${version}/configure --prefix=/ --disable-werror
+	
+	# derleme
+	make 
+	
+	# derlenen paketin yüklenmesi ve ayarlamaların yapılması
+	make install DESTDIR=$HOME/rootfs
+	cd $HOME/rootfs/
+	ln -s lib lib64
+
+Diğer paketlerimizdede **glibc** için paylaşılan script dosyası gibi dosylar hazırlayıp derlenecektir.
 
 .. raw:: pdf
 
