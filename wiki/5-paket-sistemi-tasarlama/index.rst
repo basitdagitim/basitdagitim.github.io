@@ -1,4 +1,4 @@
-Paket Sistemi Hazırlama
+Paket Sistemi Tasarlama
 =======================
 .. toctree::
 	:glob:

@@ -1,8 +1,10 @@
-Linux Tabanlı Sistem Tasarımı
-+++++++++++++++++++++++++++++
+initrd
+++++++
 
-Sistem İçin Gerekli Olan Dosyalar Ve Açılış Süreci
-++++++++++++++++++++++++++++++++++++++++++++++++++
+initrd (initial RAM disk), Linux işletim sistemlerinde kullanılan bir geçici dosya sistemidir. Bu dosya sistemi, işletim sistemi açılırken kullanılan bir köprü görevi görür ve gerçek kök dosya sistemine geçiş yapmadan önce gerekli olan modülleri ve dosyaları içerir.Ayrıca, sistem başlatıldığında kök dosya sistemine erişim sağlamadan önce gerekli olan dosyaları yüklemek için de kullanılabilir.
+
+**Temel Dosyalar Ve Açılış Süreci**
+-----------------------------------
 
 Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterli. 
 
@@ -12,8 +14,13 @@ Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterli.
 	distro/iso/boot/vmlinuz
 	distro/iso/boot/grub/grub.cfg
 	
-Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra, 
-**grub-mkrescue iso/ -o distro.iso #iso doyamız oluşturulur.**  komutuyla **distro.iso** dosyası elde ederiz. Artık iso dosyamız boot edebilen hazırlanmış bir dosyadır. Burada bazı sorulara cevap vermemiz gerekmektedir. 
+Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra;
+
+.. code-block:: shell
+
+	grub-mkrescue iso/ -o distro.iso #iso doyamız oluşturulur.
+	
+Bu komut çalışınca **distro.iso** dosyası elde ederiz. Artık iso dosyamız boot edebilen hazırlanmış bir dosyadır. Burada bazı sorulara cevap vermemiz gerekmektedir. 
 
 **distro/iso/boot/initrd.img** dosyasını sistemin açılış sürecinden ön işlemleri yapmak ve gerçek sisteme geçiş sürecini yöneten bir dosyadır. Yazın devamında nasıl hazırlanacağı anlatılacaktır. 
 
@@ -21,230 +28,263 @@ Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra,
 
 **distro/iso/boot/grub/grub.cfg** dosyamız ise initrd.img ve vmlinuz dosyalarının grub yazılımının nereden bulacağını gösteren yapılandırma dosyasıdır.
 
-Bir linux sisteminin açılış süreci şu şekilde olmaktadır.
+**Bir linux sisteminin açılış süreci şu şekilde olmaktadır.**
+-------------------------------------------------------------
  
-1- **Bilgisayara Güç Verilmesi**
+1. Bilgisayara Güç Verilmesi
+2. Bios İşlemleri Yapılıyor(POST)
+3. LILO/GRUB Yazılımı Yükleniyor(grub.cfg dosyası okunuyor ve vmlinuz ve initrd.img devreye giriyor)
+4. vmlinuz initrd.img sistemini belleğe yüklüyor
+5. vmlinuz initrd.img sistemini belleğe yüklüyor
+6. initrd.img içindeki init dosyasındaki işlem sürecine göre sistem işlemlere devam ediyor**
+7. initrd.img içindeki init dosyası temel işlemleri ve modülleri yükledikten sonra disk üzerindeki sisteme(/sbin/init) exec switch_root komutuyla süreci devrederek görevini tamamlamış olur
 
-2- **Bios İşlemleri Yapılıyor(POST)**
+Yazının devamında sistem için gerekli olan 3 temel dosyanın(initrd.img, vmlinuz, grub.cfg) hazırlanması ve iso yapılma süreci anlatılacaktır.
 
-3- **LILO/GRUB Yazılımı Yükleniyor(grub.cfg dosyası okunuyor ve vmlinuz ve initrd.img devreye giriyor)**
+.. raw:: pdf
 
-4- **vmlinuz initrd.img sistemini belleğe yüklüyor**
+   PageBreak
+   
 
-5- **vmlinuz initrd.img sistemini belleğe yüklüyor**
+**initrd Dosya İçeriği**
+-------------------------
 
-6- **initrd.img içindeki init dosyasındaki işlem sürecine göre sistem işlemlere devam ediyor**
-
-7- **initrd.img içindeki init dosyası temel işlemleri ve modülleri yükledikten sonra disk üzerindeki sisteme(/sbin/init) exec switch_root komutuyla süreci devrederek görevini tamamlamış olur**
-
-Yazının devamında sistem için gerekli olan 3 temel dosyanın hazırlanması ve iso yapılma süreci anlatılacaktır.
-
-initrd Nedir? Nasıl Hazırlanır?
-+++++++++++++++++++++++++++++++
-initrd (initial RAM disk), Linux işletim sistemlerinde kullanılan bir geçici dosya sistemidir. Bu dosya sistemi, işletim sistemi açılırken kullanılan bir köprü görevi görür ve gerçek kök dosya sistemine geçiş yapmadan önce gerekli olan modülleri ve dosyaları içerir.Ayrıca, sistem başlatıldığında kök dosya sistemine erişim sağlamadan önce gerekli olan dosyaları yüklemek için de kullanılabilir.
+**initrd.img** dosyasını hazırlarken gerekli olacak dosyalarımızın dizin yapısı ve konumu aşağıdaki gibi olmalıdır. Anlatım buna göre yapalacaktır. Örneğin S1 ifadesi satır 1 anlamında anlatımı kolaylaştımak için yazılmıştır. Aşağıdaki yapıyı oluşturmak için yapılması gerekenleri adım adım anlatılacaktır. 
     
-Gerekli olacak dosyalarımızın dizin yapısı ve konumu aşağıdaki gibi olmalıdır. Anlatım buna göre yapalacaktır. Örneğin S1 ifadesi satır 1 anlamında anlatımı kolaylaştımak için yazılmıştır. Aşağıdaki yapıyı oluşturmak için yapılması gerekenleri adım adım anlatılacaktır. 
+ .. code-block:: shell
     
-    .. code-block:: shell
+	S1- $boot/bin/busybox				#dosya
+	S2- $boot/sbin/kmod				#dosya
+	S3- $boot/sbin/debmod				#dosya
+	S4- $boot/sbin/insmod				#dosya
+	S5- $boot/bin/lsmod				#dosya
+	S6- $boot/sbin/modprobe				#dosya
+	S7- $boot/sbin/rmmod				#dosya
+	S8- $boot/sbin/modinfo				#dosya
+	S9- $boot/lib/modules/$(uname -r)/moduller	#dizin
+	S10- $boot/bin/udevadm				#dosya
+	S11- $boot/bin/udevd				#dosya
+	S12- $boot/etc/udev/rules.d			#dizin
+	S13- $boot/lib/udev/rules.d			#dizin
+	S14- $boot/initrd/bin/init			#dosya
+	S15- distro/iso/initrd.img			#dosya
+	S16- distro/iso/vmlinuz				#dosya
+	S17- distro/iso/grub/grub.cfg			#dosya
+	
+S1-S17 arasındaki dosya ve dizin yapısını hazırladığımız **initrd** adındaki script hazırlayacak ve iso haline getirecektir. 
+
+.. raw:: pdf
+
+   PageBreak
+
+S1-S17 arasındaki adımları yapacak **initrd** scripti aşağıdaki gibi hazırlandı.
+
+**initrd Scripti**
+------------------
+
+.. code-block:: shell
     
-	S1- distro/initrd/bin/busybox				#dosya
-	S2- distro/initrd/bin/kmod				#dosya
-	S3- distro/initrd/bin/debmod				#dosya
-	S4- distro/initrd/bin/insmod				#dosya
-	S5- distro/initrd/bin/lsmod				#dosya
-	S6- distro/initrd/bin/modprobe				#dosya
-	S7- distro/initrd/bin/rmmod				#dosya
-	S8- distro/initrd/bin/modinfo				#dosya
-	S9- distro/initrd/lib/modules/$(uname -r)/moduller	#dizin
-	S10- distro/initrd/bin/systemd-udevd			#dosya
-	S11- distro/initrd/bin/udevadm				#dosya
-	S12- distro/etc/udev/rules.d				#dizin
-	S13- distro/lib/udev/rules.d				#dizin
-	S14- distro/initrd/bin/init				#dosya
-	S15- distro/iso/initrd.img				#dosya
-	S16- distro/iso/vmlinuz					#dosya
-	S17- distro/iso/grub/grub.cfg				#dosya
+	#!/bin/bash
+	boot=$HOME/distro/initrd
+	rm -rf $boot
 
+	mkdir -p $HOME/distro
+	mkdir -p $boot
+	mkdir -p $boot/bin
+	#****************hazırlanmış olan bps paketlerimiz yükleniyor**********
+	./bpsupdate
+	./bpskur glibc $boot/		# Dağıtımımızın temel kütüphanesini oluşturan paket yükleniyor
+	./bpskur busybox $boot/ 	# S1- distro/initrd/bin/busybox paketi yükleniyor
+	./bpskur kmod $boot/   		# S2-S8 distro/initrd/bin/kmod aşamalarını kmod paketi yüklenince oluşur
 	
-Dizin Yapısının oluşturulması
-+++++++++++++++++++++++++++++
-Aşağıdaki komutları çalıştırdığımızda dizin yapımız oluşacaktır.   
-	.. code-block:: shell
+	#****************modul yukleme******************S9- distro/initrd/lib/modules/$(uname -r)/moduller hazırlanıyor
+	mkdir -p $boot/lib/modules/
+	mkdir -p $boot/lib/modules/$(uname -r)
+	mkdir -p $boot/lib/modules/$(uname -r)/moduller
+	cp /lib/modules/$(uname -r)/kernel/* -prvf $boot/lib/modules/$(uname -r)/moduller/ #sistemden kopyalandı..
+	/sbin/depmod --all --basedir=$boot #modul indeksi oluşturluyor
 
-		mkdir -p initrd
-		mkdir -p initrd/bin/
-		mkdir -p initrd/lib/
-		ln -s lib initrd/lib64
-		mkdir -p initrd/lib/modules/
-		mkdir -p initrd/lib/modules/$(uname -r)
-		mkdir -p initrd/lib/modules/$(uname -r)/moduller
-		mkdir -p initrd/etc/udev/
-		mkdir -p initrd/lib/udev/
-		mkdir -p iso
-		mkdir -p iso/boot
-		mkdir -p iso/boot/grub
+	./bpskur eudev $boot/		# S10-S13 eudev paketi yüklenerek oluşturur
+	./bpskur base-file $boot/	# S14- $boot/initrd/bin/init oluşturma
+	./bpskur util-linux $boot/
+	./bpskur grub $boot/
+	./bpskur e2fsprogs $boot/
 
+	#*****************initrd.img oluşturuluyor***********# S15- distro/iso/initrd.img
+	cd $boot
+	find | cpio -H newc -o >../initrd.img  
+	#************************iso *********************************
+	mkdir -p $HOME/distro/iso
+	mkdir -p $HOME/distro/iso/boot
+	mkdir -p $HOME/distro/iso/boot/grub
+	mkdir -p $HOME/distro/iso/live || true
 
-S1- distro/initrd/bin/busybox
-+++++++++++++++++++++++++++++
-busybox hakkında bilgi almak için busybox yazısında anlatılmıştır. Burada sisteme nasıl ekleneceği anlatılacaktır.
-busybox dosyamızın bağımlılıklarının **lddscript.sh** scripti ile initrd içine kopyalayacağız. Yazının devamında **Bağımlılık Tespiti** konu başlığı altında anlatılmıştır.
+	#iso dizinine vmlinuz ve initrd.img dosyamız kopyalanıyor
+	cp /boot/vmlinuz-$(uname -r) $HOME/distro/iso/boot/vmlinuz  #sistemde kullandığım kerneli kopyaladım istenirde kernel derlenebilir.
+	mv $HOME/distro/initrd.img $HOME/distro/iso/boot/initrd.img #oluşturduğumuz **initrd.img** dosyamızı taşıyoruz.
+
+	#grub menüsü oluşturuluyor..
+	cat > $HOME/distro/iso/boot/grub/grub.cfg << EOF
+	linux /boot/vmlinuz net.ifnames=0 biosdevname=0
+	initrd /boot/initrd.img
+	boot boot=live
+	EOF
 	
-	.. code-block:: shell
-	
-		cp /usr/bin/busybox initrd/bin/busybox #sistemden busybox kopyalandı..
-		lddscript.sh initrd/bin/busybox initrd/ #sistemden busybox bağımlılıkları initrd dizinimize kopyalar.
 
-S2-S8 distro/initrd/bin/kmod
-++++++++++++++++++++++++++++
-kmod yazısında kmod anlatılmıştır. Burada sisteme nasıl ekleneceği anlatılacaktır.
-	
-	.. code-block:: shell
-	
-		cp /usr/bin/kmod initrd/bin/kmod #sistemden kmod kopyalandı..
-		lddscript.sh initrd/bin/kmod initrd/ #sistemden kmod kütüphaneleri kopyalandı..
-		ln -s kmod initrd/bin/depmod	 #kmod sembolik link yapılarak depmod hazırlandı.
-		ln -s kmod initrd/bin/insmod	 #kmod sembolik link yapılarak insmod hazırlandı.
-		ln -s kmod initrd/bin/lsmod	 #kmod sembolik link yapılarak lsmod hazırlandı.
-		ln -s kmod initrd/bin/modinfo	 #kmod sembolik link yapılarak modinfo hazırlandı.
-		ln -s kmod initrd/bin/modprobe	 #kmod sembolik link yapılarak modprobe hazırlandı.
-		ln -s kmod initrd/bin/rmmod	 #kmod sembolik link yapılarak rmmode hazırlandı.
+**S1- $boot/bin/busybox**
+--------------------------
 
-S9- distro/initrd/lib/modules/$(uname -r)/moduller
-++++++++++++++++++++++++++++++++++++++++++++++++++
-Bu bölümde modüller hazırlanacak. Burada dikkat etmemiz gereken önemli bir nokta kullandığımız kernel versiyonu neyse **initrd/lib/modules/modules** altında oluşacak dizinimiz aynı olmalıdır. Bundan dolayı **initrd/lib/modules/$(uname -r)** şeklinde dizin oluşturulmuştur. Aşağıda kullandığımız 2. satırdaki **/sbin/depmod --all --basedir=initrd**, **initrd/lib/modules/$(uname -r)/moduller** altındaki modullerimizin indeksinin oluşturuyor.
-
-	.. code-block:: shell
-		
-		#döngüyle istediğimiz moduller initrd sistemimize dahil ediliyor.
-		for directory in {crypto,fs,lib} \
-    			drivers/{block,ata,md,firewire} \
-   			drivers/{scsi,message,pcmcia,virtio} \
-    			drivers/usb/{host,storage}; 
-    			do
-    				#echo ${directory}
-   				find /lib/modules/$(uname -r)/kernel/${directory}/ -type f \
-        			-exec install {} initrd/lib/modules/$(uname -r)/moduller \;
-			done
-		/sbin/depmod --all --basedir=initrd	#modüllerin indeks dosyası oluşturuluyor
-		
-S9- distro/initrd/bin/systemd-udevd
-+++++++++++++++++++++++++++++++++++
-	
-udev, Linux çekirdeği tarafından sağlanan bir altyapıdır ve donanım aygıtlarının dinamik olarak algılanmasını ve yönetilmesini sağlar. systemd-udevd ise udev'in bir bileşenidir ve donanım olaylarını işlemek için kullanılır. Daha detaylı bilgi için udev yazısında anlatılmıştır. systemd için **/lib/systemd/systemd-udevd**, no systemd için **/sbin/udevd** kullanılır. Biz systemd için tasarladığımız için **/lib/systemd/systemd-udevd** kullanıyoruz.
-	
-	.. code-block:: shell
-
-		cp /lib/systemd/systemd-udevd initrd/bin/systemd-udevd #sistemden kopyalandı..
-		lddscript initrd/bin/systemd-udevd initrd/ #sistemden kütüphaneler kopyalandı..
-
-S10- distro/initrd/bin/udevadm
-++++++++++++++++++++++++++++++
-udevadm, Linux işletim sistemlerinde kullanılan bir araçtır. Bu araç, udev (Linux çekirdeği tarafından sağlanan bir hizmet) ile etkileşim kurmamızı sağlar. udevadm, sistemdeki aygıtların yönetimini kolaylaştırmak için kullanılır.
-
-udevadm komutu, birçok farklı parametreyle kullanılabilir. İşte bazı yaygın kullanımları:
-
-**udevadm info:** Bu komut, belirli bir aygıt hakkında ayrıntılı bilgi sağlar. Örneğin, udevadm info -a -n /dev/sda komutunu kullanarak /dev/sda aygıtıyla ilgili ayrıntıları alabilirsiniz.
-
-**udevadm monitor:*** Bu komut, sistemdeki aygıtlarla ilgili olayları izlemek için kullanılır. Örneğin, udevadm monitor --property komutunu kullanarak aygıtların bağlanma ve çıkarma olaylarını izleyebilirsiniz.
-
-**udevadm trigger:*** Bu komut, udev kurallarını yeniden değerlendirmek ve aygıtları yeniden tanımak için kullanılır. Örneğin, udevadm trigger --subsystem-match=block komutunu kullanarak blok aygıtlarını yeniden tanımlayabilirsiniz.
-
-**udevadm control:** Bu komut, udev hizmetini kontrol etmek için kullanılır. Örneğin, udevadm control --reload komutunu kullanarak udev kurallarını yeniden yükleyebilirsiniz.
-
-Bu sadece bazı temel kullanımlardır ve udevadm'nin daha fazla özelliği vardır. Daha fazla bilgi için, man udevadm komutunu kullanarak udevadm'nin man sayfasını inceleyebilirsiniz.
-**Not:** udevadm systemd ve no systemd için aynı kullanımdadır. İki sistem içinde geçerlidir.
-
-	.. code-block:: shell
-
-		cp /bin/udevadm initrd/bin/udevadm #sistemden udevadm kopyalandı..
-		lddscript initrd/bin/udevadm initrd/ #sistemden kütüphaneler kopyalandı..
-
-S12- distro/etc/udev/rules.d--S13- distro/lib/udev/rules.d
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-"rules" kelimesi, Linux işletim sistemi veya bir programda belirli bir davranışı tanımlayan ve yönlendiren kuralları ifade eder. Bu kurallar, sistem veya programın nasıl çalışacağını belirlemek için kullanılır ve genellikle yapılandırma dosyalarında veya betiklerde tanımlanır.
-
-Linux'ta "rules" terimi, genellikle udev kuralları veya iptables kuralları gibi belirli bileşenlerle ilişkilendirilir.
-
-udev kuralları, Linux çekirdeği tarafından sağlanan bir altyapıdır ve donanım aygıtlarının nasıl tanınacağını ve nasıl işleneceğini belirlemek için kullanılır. Örneğin, bir USB cihazı takıldığında, udev kuralları bu cihazın nasıl adlandırılacağını ve hangi sürücünün kullanılacağını belirleyebilir.
-
-Örnek bir udev kuralı:
-
-ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="1234", ATTR{idProduct}=="5678", RUN+="/path/to/script.sh"
-
-Bu kural, bir USB cihazı eklendiğinde çalışacak bir betik belirtir. Kural, cihazın üretici kimliği (idVendor) ve ürün kimliği (idProduct) gibi özelliklerini kontrol eder ve belirli bir eylem gerçekleştirir.
-
-Aşağıda sisteme ait kurralar initrd sistemimize kopyalanmaktadır.
-
-	.. code-block:: shell
-
-		cp /etc/udev/rules.d -rf  initrd/etc/udev/
-		cp /lib/udev/rules.d -rf  initrd/lib/udev/
-		
-S14- distro/initrd/bin/init
-+++++++++++++++++++++++++++
-kernel ilk olarak initrd.img dosyasını ram'e yükleyecek ve ardından **init** dosyasının arayacaktır. Bu dosya bir script dosyası veya binary bir dosya olabilir. Bu tasarımda script dosya olacaktır. İçeriği aşağıdaki gibi olacaktır. 
+busybox küçük boyutlu dağıtım ve initrd hazırlamada kullanılan birçok uygulamayı içinde barındıran dosyamızdır. **Temel Paketler** başlığı altında nasıl derleneceği anlatıldı. Derleme ve paket oluşturma aşamalarında **busybox** paketinizi oluşturduğunuzu varsayıyoruz. Burada sisteme nasıl ekleneceği anlatılacaktır.
 
 .. code-block:: shell
 
-	cat > initrd/init << EOF
-		#!/bin/busybox ash
-		PATH=/bin
-		/bin/busybox mkdir -p /bin
-		/bin/busybox --install -s /bin
-		#**********************************
-		export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+	./bpskur busybox $boot/
 
-		[ -d /dev ]  || mkdir -m 0755 /dev	#/dev dizini yoksa oluştur
-		[ -d /root ] || mkdir -m 0700 /root	#/root dizini yoksa oluştur
-		[ -d /sys ]  || mkdir /sys		#/sys dizini yoksa oluştur
-		[ -d /proc ] || mkdir /proc		#/proc dizini yoksa oluştur
-		mkdir -p /tmp /run			# /tmp ve /run dizinleri oluşturuluyor
+.. raw:: pdf
 
-		# sisteme dizinler bağlanıyor(yükleniyor)
-		mount -t devtmpfs devtmpfs /dev
-		mount -t proc proc /proc
-		mount -t sysfs sysfs /sys
-		mount -t tmpfs tmpfs /tmp
+   PageBreak
 
-		systemd-udevd --daemon --resolve-names=never #modprobe yerine kullanılıyor
-		udevadm trigger --type=subsystems --action=add
-		udevadm trigger --type=devices --action=add
-		udevadm settle || true
+**S2-S8 $boot/bin/kmod**
+------------------------
+
+kmod yazısında kmod anlatılmıştır. Burada sisteme nasıl ekleneceği anlatılacaktır.  kmod paketi aşağıdaki komut satırıyla kurulmaktadır.
+
+.. code-block:: shell
+
+	./bpskur kmod $boot/
+
+Kurulum tamamlandığında paket içerisindeki dosya ve sembolik link dosyaları aşağıdaki gibi **$boot** komunu yüklenecektir.
+
+.. code-block:: shell
+
+	$boot/sbin/kmod
+	ln -s $boot/sbin/kmod $boot/sbin/depmod		#kmod sembolik link yapılarak depmod hazırlandı.
+	ln -s $boot/sbin/kmod $boot/sbin/insmod		#kmod sembolik link yapılarak insmod hazırlandı.
+	ln -s $boot/sbin/kmod $boot/bin/lsmod	 	#kmod sembolik link yapılarak lsmod hazırlandı.
+	ln -s $boot/sbin/kmod $boot/sbin/modinfo	#kmod sembolik link yapılarak modinfo hazırlandı.
+	ln -s $boot/sbin/kmod $boot/sbin/modprobe	#kmod sembolik link yapılarak modprobe hazırlandı.
+	ln -s $boot/sbin/kmod $boot/sbin/rmmod		#kmod sembolik link yapılarak rmmode hazırlandı.
+
+**S9- $boot/lib/modules/$(uname -r)/moduller**
+----------------------------------------------
+
+Bu bölümde modüller hazırlanacak. Burada dikkat etmemiz gereken önemli bir nokta kullandığımız kernel versiyonu neyse **$boot/lib/modules/modules** altında oluşacak dizinimiz aynı olmalıdır. Bundan dolayı **$boot/lib/modules/$(uname -r)** şeklinde dizin oluşturulmuştur. 
+Aşağıda kullandığımız son satırdaki **/sbin/depmod --all --basedir=initrd**, **$boot/lib/modules/$(uname -r)/moduller** altındaki modullerimizin indeksinin oluşturuyor.
+
+.. code-block:: shell
+
+	mkdir -p $boot/lib/modules/
+	mkdir -p $boot/lib/modules/$(uname -r)
+	mkdir -p $boot/lib/modules/$(uname -r)/moduller
+	
+	cp /lib/modules/$(uname -r)/kernel/* -prvf $boot/lib/modules/$(uname -r)/moduller/ #modüüler sistemden kopyalandı..
+	/sbin/depmod --all --basedir=$boot #modüllerin indeks dosyası oluşturuluyor
 		
-		mkdir -p disk		# /dev/sda1 diskini bağlamak için dizin oluşturuluyor	
-		modprobe ext4		#ext4 modülü yükleniyor harici olarak yüklememiz gerekiyor
-		mount /dev/sda1 disk 	#diski bağlayalım
-		
-		# dev sys proc taşıyalım
-		mount --move /dev /disk/dev
-		mount --move /sys /disk/sys
-		mount --move /proc /disk/proc
+**S10-S13- $boot/bin/udevadm**
+------------------------------
 
-		exec switch_root /disk /sbin/init	#sistemi initrd içindeki initten sda1 diskinde olan /sbin/init'e devrediyoruz.
-		/bin/busybox ash	#eğer üst satırdaki görev devir işlemi olmazsa bu satır çalışacak ve tty açılacaktır.
-	EOF
-	chmod +x initrd/init #init dosyasına çalıştırma izni veriyoruz.
-	cd initrd
-	find |cpio -H newc -o >initrd.img # initrd.img dosyasını initrd dizinine oluşturacaktır.|
-	cd ..	
+**udevadm**, Linux işletim sistemlerinde kullanılan bir araçtır. Bu araç, udev (Linux çekirdeği tarafından sağlanan bir hizmet) ile etkileşim kurmamızı sağlar. **udevadm** sistemdeki aygıtların yönetimini kolaylaştırmak için kullanılır. **udevd** ise udevadm'in bir bileşenidir ve donanım olaylarını işlemek için kullanılır. 
+
+.. code-block:: shell
+
+	./bpskur eudev $boot/	# paket kuruluyor
+
+Paket kurulunca aşağıdaki gibi bir dizin yapısı ve dosyalar dağıtım dizinimize($boot) yüklenecektir.
+
+.. image:: /_static/images/initrd-eudev.png
+  	:width: 500
+
+.. raw:: pdf
+
+   PageBreak
+   
+
+**S14- distro/initrd/bin/init**
+-------------------------------
+
+kernel ilk olarak initrd.img dosyasını ram'e yükleyecek ve ardından **init** dosyasının arayacaktır. Bu dosya bir script dosyası veya binary bir dosya olabilir. **init** ve sistem için gereken temel dosyaları **base-file** paketi olarak hazırladık. **base-file** paketi aşağıdaki komutla kurulur.
+
+.. code-block:: shell
+
+	./bpskur base-files $boot/	# paket kuruluyor
+
+*base-file** paketi içindeki **init** script dosyası aşağıdaki gibi  hazırlandı. 
+
+**init Dosyası**
+................
+
+.. code-block:: shell
+
+	#!/bin/busybox ash
+	/bin/busybox mkdir -p /bin
+	/bin/busybox --install -s /bin
+	#**********************************
+	export PATH=/sbin:/bin:/usr/bin:/usr/sbin:
+
+	[ -d /dev ]  || mkdir -m 0755 /dev
+	[ -d /root ] || mkdir -m 0700 /root
+	[ -d /sys ]  || mkdir /sys
+	[ -d /proc ] || mkdir /proc
+	mkdir -p /tmp /run
+	touch /dev/null
+
+	# devtmpfs does not get automounted for initramfs
+	mount -t devtmpfs devtmpfs /dev
+	mount -t proc proc /proc
+	mount -t sysfs sysfs /sys
+	mount -t tmpfs tmpfs /tmp
+	#******************************init üzerinden dosya script çalışrtımak için****
+	for x in $(cat /proc/cmdline); do
+		case $x in
+		init=*)
+			init=${x#init=}
+			echo " bu bir test :${x#init=}"
+			${x#init=}
+			;;
+		esac
+	done
+
+	echo "initrd başlatıldı"
+	/bin/busybox ash
+
 
 Oluşturulan **initrd.img** dosyası çalışacak tty açacak(konsol elde etmiş olacağız. 
 Aslında bu işlemi yapan şey busybox ikili dosyası.
 
+.. raw:: pdf
 
-S15- distro/iso/initrd.img - S16- distro/iso/vmlinuz 
-+++++++++++++++++++++++++++++++++++++++++++++++++++++
-initrd.img dosyası kernel(vmlinuz) ile birlikte kullanılan belleğe ilk yüklenen dosyadır. Bu dosyanın görevi sistemin kurulu olduğu diski tanımak için gereken modülleri yüklemek ve sistemi başlatmaktır. Bu dosya /boot/initrd.img-xxx konumunda yer alır. initrd.img dosyası üretmek için 
+   PageBreak
+   
+**S15- distro/iso/initrd.img**
+------------------------------
+
+initrd.img dosyası kernel(vmlinuz) ile birlikte kullanılan belleğe ilk yüklenen dosyadır. Bu dosyanın görevi sistemin kurulu olduğu diski tanımak için gereken modülleri yüklemek ve sistemi başlatmaktır. 
+
+Bu dosya /boot/initrd.img-xxx konumunda yer alır. **$HOME/distro/initrd.img** konumuna  dosyamız aşağıdaki gibi oluşturulur.
+
+.. code-block:: shell
+
+	cd $boot
+	find | cpio -H newc -o >../initrd.img 
+	
+**initrd.img** iso dosyası hazırlamak için **$HOME/distro/iso/boot/initrd.img** konumuna taşındı.
+
+.. code-block:: shell
+
+	mv $HOME/distro/initrd.img iso/boot/initrd.img # Oluşturulan **initrd.img** dosyası taşınır.
+
+**S16- distro/iso/vmlinuz**
+----------------------------
+
+vmlinuz linuxta **kernel** diye ifade edilen dosyadır. Burada kernel derlemek yerine debianda çalışan kernel dosyamı kullandım. Kernel derlediğinizde **vmlinuz** dosyası elde edeceksiniz. Kernel derleme ayrı başlık altında anlatılmaktadır.
 
 .. code-block:: shell
 
 	cp /boot/vmlinuz-$(uname -r) iso/boot/vmlinuz  #sistemde kullandığım kerneli kopyaladım istenirde kernel derlenebilir.
-	mv initrd/initrd.img iso/boot/initrd.img #daha önce oluşturduğumuz **initrd.img** dosyamızı taşıyoruz.
+		
+**S17- distro/iso/grub/grub.cfg**
+----------------------------------
 
-S17- distro/iso/grub/grub.cfg
-+++++++++++++++++++++++++++++
 grub menu dosyası oluşturuluyor.
 
 .. code-block:: shell
@@ -256,55 +296,6 @@ grub menu dosyası oluşturuluyor.
 	EOF
 
 Yukarıdaki script **iso/boot/grub/grub.cfg** dosyasının içeriği olacak şekilde ayarlanır.
-
-İso Dosyasının Oluşturulması
-++++++++++++++++++++++++++++
-
-.. code-block:: shell
-
-	grub-mkrescue iso/ -o distro.iso #iso doyamız oluşturulur.
-
-Artık sistemi açabilen ve tty açıp bize sunan bir yapı oluşturduk. Çalıştırmak için qemu kullanılabililir.
-
-
-**qemu-system-x86_64 -cdrom distro.iso -m 1G** komutuyla çalıştırıp test edebiliriz. 
-
-Bağımlılıkların Tespiti
-+++++++++++++++++++++++
-İkili dosyasının iki tür derlenme şekli vardır(statik ve dinamik). Statik derleme gerekli olan kütüphaneleri içerisinde barındıran tek bir dosyadır. Dinamik olan ise gerekli olan kütüphane dosyaları ikili dosya dışında tutulmaktadır. İkili dosyamızın bağımlılıklarının bulunması için aşağıdaki scripti kullanabiliriz. Scripti lddscript.sh dosyası olarak kaydedip kullanabilirsiniz. **bash lddscript.sh /bin/ls /tmp/test** şeklinde kullandığımızda /tmp/test/ dizinine **ls** ikili dosyasının konumunu ve bağımlılıklarını kopyalayacaktır.
-    
-    .. code-block:: shell
-
-	#!/bin/bash
-	#bash lddscript binaryPath binaryTarget
-	if [ ${#} != 2 ]
-	then
-	    echo "usage $0 PATH_TO_BINARY target_folder"
-	    exit 1
-	fi
-
-	path_to_binary="$1"
-	target_folder="$2"
-
-	# if we cannot find the the binary we have to abort
-	if [ ! -f "${path_to_binary}" ]
-	then
-	    echo "The file '${path_to_binary}' was not found. Aborting!"
-	    exit 1
-	fi
-
-	# copy the binary itself
-	##echo "---> copy binary itself"
-	##cp --parents -v "${path_to_binary}" "${target_folder}"
-
-	# copy the library dependencies
-	echo "---> copy libraries"
-	ldd "${path_to_binary}" | awk -F'[> ]' '{print $(NF-1)}' | while read -r lib
-	do
-	    [ -f "$lib" ] && cp -v --parents "$lib" "${target_folder}"
-	done
-
-
 
 .. raw:: pdf
 
