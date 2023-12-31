@@ -189,7 +189,7 @@ Diğer paketler için sadece hazırlanacak pakete uygun şekilde **bpsbuild** do
 Paket Yapma
 -----------
 
-Bu bilgilere göre readline paketi nasıl oluturulur onu görelim. Paketlerimizi oluşturacağımız bir dizin oluşturarak aşağıdaki işlemleri yapalım. Burada yine **readline** paketi anlatılacaktır.
+Bu bilgilere göre readline paketi nasıl oluşturulur onu görelim. Paketlerimizi oluşturacağımız bir dizin oluşturarak aşağıdaki işlemleri yapalım. Burada yine **readline** paketi anlatılacaktır.
 
 
 .. code-block:: shell
@@ -201,7 +201,7 @@ Bu bilgilere göre readline paketi nasıl oluturulur onu görelim. Paketlerimizi
 	./bpspaketle readline # bpspaketle dosyamızın bu konumda olduğu varsayılmıştır ve parametre olarak readline dizini verilmiştir.
 
 Komut çalışınca readline/readline-8.1.bps dosyası oluşacaktır.
-Artık sisteme kurulum için ikili dosya, kütüphaneleri ve dizinleri barındıran paketimiz oluştruldu. Bu paketi artık sistemimize nasıl kurarız **Paket Kurma** başlığı altında anlatılacaktır.
+Artık sisteme kurulum için ikili dosya, kütüphaneleri ve dizinleri barındıran paketimiz oluştruldu. Bu paketi sistemimize nasıl kurarız? konusu **Paket Kurma** başlığı altında anlatılacaktır.
 
 .. raw:: pdf
 

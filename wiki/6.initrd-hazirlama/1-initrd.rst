@@ -6,7 +6,7 @@ initrd (initial RAM disk), Linux işletim sistemlerinde kullanılan bir geçici 
 **Temel Dosyalar Ve Açılış Süreci**
 -----------------------------------
 
-Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterli. 
+Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterlidir. 
 
     .. code-block:: shell
 
@@ -22,11 +22,11 @@ Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra;
 	
 Bu komut çalışınca **distro.iso** dosyası elde ederiz. Artık iso dosyamız boot edebilen hazırlanmış bir dosyadır. Burada bazı sorulara cevap vermemiz gerekmektedir. 
 
-**distro/iso/boot/initrd.img** dosyasını sistemin açılış sürecinden ön işlemleri yapmak ve gerçek sisteme geçiş sürecini yöneten bir dosyadır. Yazın devamında nasıl hazırlanacağı anlatılacaktır. 
+**distro/iso/boot/initrd.img** dosyası sistemin açılış sürecinde ön işlemleri yaparak gerçek sisteme geçiş sürecini yöneten bir dosyadır. Yazın devamında nasıl hazırlanacağı anlatılacaktır. 
 
 **distro/iso/boot/vmlinuz** dosyamız kernelimiz oluyor. Ben kullandığım debian sisteminin mevcut kernelini kullandım. İstenirse kernel derlenebilir. 
 
-**distro/iso/boot/grub/grub.cfg** dosyamız ise initrd.img ve vmlinuz dosyalarının grub yazılımının nereden bulacağını gösteren yapılandırma dosyasıdır.
+**distro/iso/boot/grub/grub.cfg** dosyamız ise initrd.img ve vmlinuz dosyalarının grub yazılımını nerede bulacağını gösteren yapılandırma dosyasıdır.
 
 **Bir linux sisteminin açılış süreci şu şekilde olmaktadır.**
 -------------------------------------------------------------
@@ -35,9 +35,8 @@ Bu komut çalışınca **distro.iso** dosyası elde ederiz. Artık iso dosyamız
 2. Bios İşlemleri Yapılıyor(POST)
 3. LILO/GRUB Yazılımı Yükleniyor(grub.cfg dosyası okunuyor ve vmlinuz ve initrd.img devreye giriyor)
 4. vmlinuz initrd.img sistemini belleğe yüklüyor
-5. vmlinuz initrd.img sistemini belleğe yüklüyor
-6. initrd.img içindeki init dosyasındaki işlem sürecine göre sistem işlemlere devam ediyor**
-7. initrd.img içindeki init dosyası temel işlemleri ve modülleri yükledikten sonra disk üzerindeki sisteme(/sbin/init) exec switch_root komutuyla süreci devrederek görevini tamamlamış olur
+5. initrd.img içindeki init dosyasındaki işlem sürecine göre sistem işlemlere devam ediyor**
+6. initrd.img içindeki init dosyası temel işlemleri ve modülleri yükledikten sonra disk üzerindeki sisteme(/sbin/init) exec switch_root komutuyla süreci devrederek görevini tamamlamış olur
 
 Yazının devamında sistem için gerekli olan 3 temel dosyanın(initrd.img, vmlinuz, grub.cfg) hazırlanması ve iso yapılma süreci anlatılacaktır.
 
@@ -134,7 +133,7 @@ S1-S17 arasındaki adımları yapacak **initrd** scripti aşağıdaki gibi hazı
 **S1- $boot/bin/busybox**
 --------------------------
 
-busybox küçük boyutlu dağıtım ve initrd hazırlamada kullanılan birçok uygulamayı içinde barındıran dosyamızdır. **Temel Paketler** başlığı altında nasıl derleneceği anlatıldı. Derleme ve paket oluşturma aşamalarında **busybox** paketinizi oluşturduğunuzu varsayıyoruz. Burada sisteme nasıl ekleneceği anlatılacaktır.
+busybox küçük boyutlu dağıtım ve initrd hazırlamada kullanılan, birçok uygulamayı içinde barındıran dosyamızdır. **Temel Paketler** başlığı altında nasıl derleneceği anlatıldı. Derleme ve paket oluşturma aşamalarında **busybox** paketinizi oluşturduğunuzu varsayıyoruz. Burada sisteme nasıl ekleneceği anlatılacaktır.
 
 .. code-block:: shell
 
@@ -153,7 +152,7 @@ kmod yazısında kmod anlatılmıştır. Burada sisteme nasıl ekleneceği anlat
 
 	./bpskur kmod $boot/
 
-Kurulum tamamlandığında paket içerisindeki dosya ve sembolik link dosyaları aşağıdaki gibi **$boot** komunu yüklenecektir.
+Kurulum tamamlandığında paket içerisindeki dosya ve sembolik link dosyaları aşağıdaki gibi **$boot** konumuna yüklenecektir.
 
 .. code-block:: shell
 
@@ -169,7 +168,7 @@ Kurulum tamamlandığında paket içerisindeki dosya ve sembolik link dosyaları
 ----------------------------------------------
 
 Bu bölümde modüller hazırlanacak. Burada dikkat etmemiz gereken önemli bir nokta kullandığımız kernel versiyonu neyse **$boot/lib/modules/modules** altında oluşacak dizinimiz aynı olmalıdır. Bundan dolayı **$boot/lib/modules/$(uname -r)** şeklinde dizin oluşturulmuştur. 
-Aşağıda kullandığımız son satırdaki **/sbin/depmod --all --basedir=initrd**, **$boot/lib/modules/$(uname -r)/moduller** altındaki modullerimizin indeksinin oluşturuyor.
+Aşağıda kullandığımız son satırdaki **/sbin/depmod --all --basedir=initrd**, **$boot/lib/modules/$(uname -r)/moduller** altındaki modullerimizin indeksini oluşturuyor.
 
 .. code-block:: shell
 

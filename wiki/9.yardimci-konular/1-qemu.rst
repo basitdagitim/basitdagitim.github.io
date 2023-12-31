@@ -9,7 +9,7 @@ Qemu Nedir?
 
 Açık kaynaklı sanallaştırma aracıdır. 
 
-Kaynaktan dosyalarından kurulum için;
+Kaynak dosyalarından kurulum için;
 
 .. code-block:: shell
 

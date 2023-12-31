@@ -12,7 +12,7 @@ Disk ve isoya erişim için aşağıdaki modüllerin yüklü olduğundan emin ol
 
 Uefi - Legacy tespiti
 ^^^^^^^^^^^^^^^^^^^^^
-**/sys/firmware/efi** dizini varsa uefi yoksa legacy sisteme sahipsinizdir.
+**/sys/firmware/efi** dizini varsa uefi, yoksa legacy sisteme sahipsinizdir.
 Eğer uefi ise ia32 veya x86_64 olup olmadığını anlamak için **/sys/firmware/efi/fw_platform_size** içeriğine bakın.
 
 .. code-block:: shell
@@ -39,7 +39,7 @@ Bu anlatımda kurulum için **/boot** dizinini ayırmayı ve efi bölümü olara
 4. write
 5. quit
 6. Bu işlem sonucunda sadece sda1 sda2 olur
-6. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
+7. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
 
 	.. code-block:: shell
 
@@ -142,7 +142,7 @@ Grub yapılandırması
 1. /boot bölümünde initrd.img-<çekirdek-sürümü> dosyamızın olduğundan emin olalım.
 2. /boot bölümünde vmlinuz-<çekirdek-sürümü>  kernel dosyamızın olduğundan emin olalım.
 3. /boot/grub/grub.cfg konumunda dostamızı oluşturalım(vi, touch veya nano ile).
-3. dev/sda2 diskimizim uuid değerimizi bulalım.
+4. dev/sda2 diskimizim uuid değerimizi bulalım.
 
 	.. code-block:: shell
 

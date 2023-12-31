@@ -8,7 +8,7 @@ Lisanslamadaki bu felsefeden dolayı çok fazla dağıtım oluşmuş ve oluşmay
 
  Linux dağıtımları genelde **kernel** ve uygulamalardan oluşur. Kernel ve uygulamaların kodları github, gitlab vb. ortamlarda paylaşıldığı için sıfırdan bir dağıtımda oluşturmak mümkündür. Bunu oluştururken yasal olmayan hiçbir işlem yapmamış oluruz. Çünkü  genel felsefe ***"Al, kullan, değiştir ve kimseden izin almadan dağıt"*** şeklinde olduğunu hatırlayalım.
 
- Bu doküman basit seviveyede bir dağıtım oluşturmak ve kurulabilir bir medya dosyası(iso dosya) nasıl hazırlanacağını anlatan bir rehber olacaktır. 
+ Bu doküman basit seviveyede bir dağıtım oluşturmak ve kurulabilir bir medya dosyası(iso dosya) nasıl hazırlanak için bir rehber olacaktır. 
 Bu dokümanı hazırlanmasında ve anlatılanları tecrübe ederek öğrenmeme katkısı olan **Turkman Linux** dağıtım ekibiden  @sulincix(Ali Rıza KESKİN) ve Celaleddin AKARSU'ya teşekkür ederim. 
 
 Dağıtım Nasıl Hazırlanmalı?

@@ -45,10 +45,10 @@ bpskaldir scripti
 	#/var/bps/index.lst dosyasından ilgili paket satırı kaldırılır.
 	sed '/^name=\"${paket}\"/d' /var/bps/index.lst
 	
-Bağımlılıkları başka paketler kullanıyor mu kontrol edilir. Script içinde buişlem yapılmamıştır. Daha sonra güncellenecektir.
+Bağımlılıkları başka paketler kullanıyor mu kontrol edilir. Script içinde bu işlem yapılmamıştır. Daha sonra güncellenecektir.
 Bu örnekte paket listesini satır satır okuduk. Önce dosya olanları sildik.
 Daha sonra tekrar okuyup boş kalan dizinleri sildik.
-Son olarak palet listesi dosyamızı sildik.
+Son olarak paket listesi dosyamızı sildik.
 Bu işlem sonunda paket silinmiş oldu.
 
 bpskaldir Kullanma

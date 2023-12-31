@@ -1,7 +1,7 @@
 Live Sistem Oluşturma
 +++++++++++++++++++++
 
-Canlı sistem oluşturma veya ram üzerinden çalışan sistem hazırlamak için SquashFS dosya sisteminde dağıtım sıkıştırılmalıdır. Bu bağlamda SquashFS dosya sistemi ve sıkıştıma nasıl yapılır bu dokümanda nalatılmaktadır.
+Canlı sistem oluşturma veya ram üzerinden çalışan sistem hazırlamak için SquashFS dosya sisteminde dağıtım sıkıştırılmalıdır. Bu bağlamda SquashFS dosya sistemi ve sıkıştıma nasıl yapılır bu dokümanda anlatılmaktadır.
 
 SquashFS Nedir?
 ---------------

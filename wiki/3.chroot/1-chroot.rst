@@ -43,7 +43,7 @@ Bu yapının oluşturulması için temel komutları ve komut yorumlayıcının o
 
 
 Görüldüğü gibi ls komutunun çalışması için bağımlı olduğu kütüphane dosyaları bulunmaktadır. Bu dosyaları yeni oluşturduğumuz wrk klasörüne aynı dizin yapısında kopyalamamız gerekmektedir.
-Bu dosyalar eksiksiz olursa ls komutu çalışacaktır. Fakat bu işlemi tek tek yapmamız çok zahmetli bir işlemdir. Bu işşi halledecek script dosyası aşağıda verilmiştir.
+Bu dosyalar eksiksiz olursa ls komutu çalışacaktır. Fakat bu işlemi tek tek yapmamız çok zahmetli bir işlemdir. Bu işi halledecek script dosyası aşağıda verilmiştir.
 
 Bağımlılık Scripti
 ------------------
@@ -84,7 +84,8 @@ lldscript.sh
 Basit Sistem Oluşturma
 ----------------------
 
-Bu örnekte masaüstünde test dizini oluşturup ve işlemleryapıldı. ls, rmdir, mkdir ve bash komutlarından oluşan sistem hazırlama.
+Bu örnekte masaüstünde test dizini oluşturuldu ve işlemler yapıldı. 
+ls, rmdir, mkdir ve bash komutlarından oluşan sistem hazırlama.
 
 ls Komutu
 ----------
