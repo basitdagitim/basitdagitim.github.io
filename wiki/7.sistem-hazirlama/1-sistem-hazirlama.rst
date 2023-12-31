@@ -1,7 +1,7 @@
 Dağıtım Hazırlama
 +++++++++++++++++
 
-**initrd** hazırlanma aşamaları **initrd** konu başlığında detaylıca anlatıldı.  Sistem hazırlanırken küçük farklılıklar olsada **initrd** hazırlamaya benzer aşamalar yapılacaktır. Sistemimin yani oluşacak **iso** dosyasının yapısı aşağıdaki gibi olacaktır. Aşağıda sadece **filesystem.squashfs** dosyasının hazırlanması kaldı.
+**initrd** hazırlama aşamaları **initrd** konu başlığında detaylıca anlatıldı.  Sistem hazırlanırken küçük farklılıklar olsada **initrd** hazırlamaya benzer aşamalar yapılacaktır. Sistemimin yani oluşacak **iso** dosyasının yapısı aşağıdaki gibi olacaktır. Aşağıda sadece **filesystem.squashfs** dosyasının hazırlanması kaldı.
 
 .. code-block:: shell
 	

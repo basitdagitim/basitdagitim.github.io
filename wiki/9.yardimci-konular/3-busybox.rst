@@ -29,5 +29,5 @@ Busybox derlemek için öncelikle **make defconfig** kullanılarak veya önceden
 
 Derleme bittiğinde kaynak kodun bulunduğu dizinde busybox dosyamız oluşmuş olur.
 
-Static olarak derlemiş olduğumuz busyboxu kullanarak milimal kök dizin oluşturabiliriz. Burada static yapı kallanılmayacaktır. 
+Static olarak derlemiş olduğumuz busyboxu kullanarak minimal kök dizin oluşturabiliriz. Burada static yapı kallanılmayacaktır. 
 Sistemdeki /bin/busybox kullanılacaktır. Eğer yoksa busybox sisteme yüklenmelidir.

@@ -1,6 +1,6 @@
 Kernel Nedir?
 ++++++++++++
-linux sistemlerinin temel dosyasıdır.
+Linux sistemlerinin temel dosyasıdır.
 
 Kernel Derleme
 --------------

@@ -1,6 +1,6 @@
 busybox Nedir?
 ++++++++++++++
-Busybox tek bir dosya halinde bulunan birçok araç seçine sahip olan bir programdır. Bu araçlar initramfs sisteminde ve sistem genelinde sıkça kullanılabilir. Busybox aşağıdaki gibi kullanılır. Örneğin, dosya listelemek için ls komutunu kullanmak isterseniz:
+Busybox tek bir dosya halinde bulunan birçok araç setine sahip olan bir programdır. Bu araçlar initramfs sisteminde ve sistem genelinde sıkça kullanılır. Busybox aşağıdaki gibi kullanılır. Örneğin, dosya listelemek için ls komutunu kullanmak isterseniz:
 
 .. code-block:: shell
 
@@ -29,7 +29,7 @@ Busybox derlemek için öncelikle **make defconfig** kullanılarak veya önceden
 
 Derleme bittiğinde kaynak kodun bulunduğu dizinde busybox dosyamız oluşmuş olur.
 
-Static olarak derlemiş olduğumuz busyboxu kullanarak milimal kök dizin oluşturabiliriz. Burada static yapı kallanılmayacaktır. 
+Static olarak derlemiş olduğumuz busybox'u kullanarak minimal kök dizin oluşturabiliriz. Burada static yapı kullanılmayacaktır. 
 Sistemdeki /bin/busybox kullanılacaktır. Eğer yoksa busybox sisteme yüklenmelidir.
 
 

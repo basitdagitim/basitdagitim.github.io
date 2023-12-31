@@ -1,11 +1,10 @@
 Dağıtım İçin Ortamın Hazırlanması
 =================================
 
-Dağıtım hazırlarken sistemin derlenmesi ve gerekli ayarlamaların yapılabilmesi için bir linux dağıtımı gerekmektedir.
-Bu hangi dağıtım olacağına tecrübeli olduğunuz dağıtımı seçmenizi tavsiye ederim. Fakat seçilecek dağıtım Gentoo olması daha hızlı ve sorunsuz sürece devam etmenizi sağlayacaktır.
-Bu dağıtımı hazırlaken Debian dağıtımı kullanıldı. Bazı paketle için özellikle bağımlılık sorunları yaşanan paketler için ise Gentoo kullanıldı.
+Dağıtım hazırlarken sistemin derlenmesi ve gerekli ayarlamaların yapılabilmesi için bir linux dağıtımı gerekmektedir. Tecrübeli olduğunuz bir dağıtımı seçmenizi tavsiye ederim. Fakat seçilecek dağıtım Gentoo olması daha hızlı ve sorunsuz sürece devam etmenizi sağlayacaktır.
+Bu dağıtımı hazırlaken Debian dağıtımı kullanıldı. Bazı paketler için, özellikle bağımlılık sorunları yaşanan paketler için ise Gentoo kullanıldı.
 
-Bir dağıtım hazırlamak için çeşitli paketler lazım. Bu paketler;
+Bir dağıtım hazırlamak için çeşitli paketler lazımdır. Bu paketler;
 
 - debootstrap	: Dağıtım hazırlaken kullanılacak chroot uygulaması bu paket ile gelmektedir. chroot ayrı bir konu başlığıyla anlatılacaktır.
 - make		: Paket derlemek için uygulama

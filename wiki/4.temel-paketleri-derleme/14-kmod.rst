@@ -1,9 +1,9 @@
 kmod
 ++++
 
-Linux çekirdeği ile donanım arasındaki haberleşmeyi sağlayan kod parçalarıdır. Bu kod parçalarını kernele eklediğimizde kerneli tekrardan derlememiz gerekmektedir. Her eklenen koddan sonra kernel derleme, kod çıkarttığımzda kernel derlemek ciddi bir iş yükü ve karmaşa yaratacaktır.
+Linux çekirdeği ile donanım arasındaki haberleşmeyi sağlayan kod parçalarıdır. Bu kod parçalarını kernele eklediğimizde kerneli tekrardan derlememiz gerekmektedir. Her kod ekleme ve her kod çıkartma işleminden sonra kernel derlemek ciddi bir iş yükü ve karmaşa oluşturacaktır.
 
-Bu sorunların çözümü için modul vardır. moduller kernele istediğimiz kod parpalarını ekleme ya da çıkartma yapabiliyoruz. Bu işlemleri yaparken kenel derleme işlemi yapmamıza gerek yok.
+Bu sorunların çözümü için modul vardır. Moduller kernele istediğimiz kod parçalarını ekleme ya da çıkartma yapabilmemizi sağlar. Bu işlemleri yaparken kenel derleme işlemi yapmamıza gerek yoktur.
 
 kmod Derleme
 ------------
@@ -42,8 +42,8 @@ kmod Derleme
 
 
 
-Kmod'u derleme için hazırlayın:
--------------------------------
+Kmod'u derleme için hazırlayalım:
+---------------------------------
 
 .. code-block:: shell
 	
@@ -112,7 +112,7 @@ veya kernele modul yükleme kaldırma için kmod aracı kullanılmaktadır. kmod
 kmod Test Edilmesi
 ------------------
 
-dmesg ile log kısmında eklendiğinde veya modul komutlarının kullanılmasının sonuçlarını görebiliriz.
+Bir modül eklendiğinde veya çıkartıldığında modülle ilgili mesajları dmesg logları ile görebiliriz.
 
 .. raw:: pdf
 

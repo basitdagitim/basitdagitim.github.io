@@ -10,7 +10,7 @@ Hazırlanan dağıtımda paketlerin kurulması için  sırasıyla aşağıdaki i
 	- Paketin bağımlı olduğu paketler varmı kontrol edilir
 	- Yüklü olmayan bağımlılıklar yüklenir
 	
-4. Yüklenen paket bilgileri(name, version ve bağımlılık) bilgileri yüklü paketlerin index bilgilerini tutan paket sistemi dizininindeki index dosyasına eklenir.	
+4. Yüklenen paket bilgileri(name, version ve bağımlılık) yüklü paketlerin index bilgilerini tutan paket sistemi dizininindeki index dosyasına eklenir.	
 5. Açılan paket içindeki yüklenen dosyaların nereye yüklendiğini tutan file.index dosyası paket sistemi dizinine yüklenir
 
 

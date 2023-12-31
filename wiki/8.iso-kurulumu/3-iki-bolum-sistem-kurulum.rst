@@ -25,7 +25,7 @@ Disk Hazırlanmalı
 4. write
 5. quit
 6. Bu işlem sonucunda sadece sda1 sda2 olur
-6. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
+7. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
 
 	.. code-block:: shell
 
@@ -83,7 +83,7 @@ Daha sonra diski senkronize edelim.
 
 Bootloader kurulumu
 ^^^^^^^^^^^^^^^^^^^
-grub kurulumu yapmak için grub paketinini kurulu olduğundan emin olun.
+grub kurulumu yapmak için grub paketinin kurulu olduğundan emin olun.
 
 	.. code-block:: shell
 
@@ -117,7 +117,7 @@ Grub yapılandırması
 1. /boot bölümünde initrd.img-<çekirdek-sürümü> dosyamızın olduğundan emin olalım.
 2. /boot bölümünde vmlinuz-<çekirdek-sürümü>  kernel dosyamızın olduğundan emin olalım.
 3. /boot/grub/grub.cfg konumunda dostamızı oluşturalım(vi, touch veya nano ile).
-3. dev/sda2 diskimizim uuid değerimizi bulalım.
+4. dev/sda2 diskimizim uuid değerimizi bulalım.
 
 	.. code-block:: shell
 
@@ -151,9 +151,10 @@ Fstab dosyası
 
 Bu dosyayı doldurarak açılışta hangi disklerin bağlanacağını ayarlamalıyız. /etc/fstab dosyasını aşağıdakine uygun olarak doldurun.
 
-# <fs>                  <mountpoint>    <type>          <opts>          <dump/pass>
-/dev/sda1       /boot   vfat    defaults,rw     0       1
-/dev/sda2       /       ext4    defaults,rw     0       1
+
+# <fs>     <mountpoint>    <type>     <opts>      <dump/pass>
+/dev/sda1       /boot       vfat    defaults,rw     0       1
+/dev/sda2       /           ext4    defaults,rw     0       1
 
 
 **Not:** Disk bölümü konumu yerine **UUID="<uuid-değeri>"** şeklinde yazmanızı öneririm.
