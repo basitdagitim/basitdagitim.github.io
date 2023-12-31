@@ -28,6 +28,16 @@ Yukarıdaki örnekte kaynak kodu ilk önce **.o** uzantılı object dosyasına �
 Derlemeler **static** ve **dynamic** olarak 2 şekilde yapılabilir. Static olarak yapılan derleme herhangi bir bağımlılık olmaksızın çalışabilirken Dynamic olarak yapılmış derlemeler sistemdeki libc ve diğer gereken bağımlılıklara ihtiyaç duyar.
 static derleme boyut olarak daha büyüktür ve gerekli olan kütüphanelerin static hallerinin de bulunması gerekir.
 
+gcc libstdc++ Ekleme
+--------------------
+
+gcc ile derlenen bazı dosyalarda **libstdc++** görülür. Bu kütüphaneyi static olarak dahil etmek için **-static-libstdc++**
+eklenmelidir.
+
+.. code-block:: shell
+
+	$ gcc -o main main.c -static-libstdc++ #statik kütüphane dahil edildi
+
 .. raw:: pdf
 
    PageBreak
