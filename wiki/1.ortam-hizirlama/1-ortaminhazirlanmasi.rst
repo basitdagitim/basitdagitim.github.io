@@ -16,11 +16,13 @@ Bir dağıtım hazırlamak için çeşitli paketler lazımdır. Bu paketler;
 - tar		: tar uzantılı dosya sıkıştırma ve açma içiçn kullanılan uygulama.
 - zstd		: Yüksek sıkıştırma yapan sıkıştırma uygulaması 
 - grub-mkrescue : Hazırladığımız iso dizinini iso yapmak için kullanılan uygulama
-qemu-system-x86	: iso dosyalarını test etmek ve kullanmak için sanal makina emülatörü uygulaması.
+- qemu-system-x86	: iso dosyalarını test etmek ve kullanmak için sanal makina emülatörü uygulaması.
 
 
-sudo apt update
-sudo apt install debootstrap make squashfs-tools gcc wget unzip xz-utils tar zstd -y
+.. code-block:: shell
+
+	sudo apt update
+	sudo apt install debootstrap make squashfs-tools gcc wget unzip xz-utils tar zstd -y
 
 Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyiz. Bu dokümanda sistem için kurulum dizini $HOME/rootfs olarak kullanacağız.
 

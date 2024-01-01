@@ -86,7 +86,7 @@ artık dosyanın karşısında **not found** mesajı yok. Artık çalıcaşacakt
  	Merhaba Dünya
 
 Kütüphane Dosyasının Konumunu İsteğe Göre Belirleme(rpath)
-++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Bazen kütüphane dosyalarının **/usr/lib** konumunda değilde bizim belirleyeceğimiz konumda olmasını isteyebiliriz.
 

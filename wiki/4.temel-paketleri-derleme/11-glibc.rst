@@ -43,7 +43,7 @@ Aşağıdaki c kodumuzu derleyelim ve **$HOME/rootfs** konumuna kopyalayalım.
 	}
 
 Program Derleme
-.................
+................
 
 .. code-block:: shell
 	
@@ -69,6 +69,7 @@ Aşağıdaki gibi bir hata alacağız.
 
 	sudo chroot $HOME/rootfs/ /merhaba
 	chroot: failed to run command ‘/merhaba’: No such file or directory
+	
 Hata Çözümü
 ...........
 

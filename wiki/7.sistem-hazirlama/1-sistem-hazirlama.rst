@@ -13,7 +13,7 @@ Dağıtım Hazırlama
 **filesystem.squashfs Hazırlama**
 ---------------------------------
 
- **filesystem.squashfs** dosyası **/initrd.img** dosyasına benzer yapıda hazırlanacak.
+**filesystem.squashfs** dosyası **/initrd.img** dosyasına benzer yapıda hazırlanacak.
 En büyük faklılık **init** çalışabilir dosya içeriğinde yapılmalı. Yapı **/initrd.img** dizin yapısı gibi hazırlandıktan sonra **filesystem.squashfs** oluşturulmalı ve **$HOME/distro/live/filesystem.squashfs** konuma kopyalanmalıdır. Aşağıdaki komutlarla **filesystem.squashfs** hazırlanıyor ve  **$HOME/distro/live/** konumuna taşınıyor.
 
 .. code-block:: shell
