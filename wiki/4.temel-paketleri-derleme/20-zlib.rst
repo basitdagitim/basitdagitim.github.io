@@ -7,46 +7,48 @@ zlib, genellikle dosya sıkıştırma, ağ iletişimi ve veritabanı yönetimi g
 
 Linux sistemlerinde zlib kütüphanesi genellikle C dilinde kullanılır. Aşağıda basit bir örnek verilmiştir:
 
-language-c
+.. code-block:: shell
+	
+	#include <stdio.h>
+	#include <zlib.h>
 
-#include <stdio.h>
-#include <zlib.h>
+	int main() {
+	    char source[] = "Bu bir örnek metindir.";
+	    char compressed[1024];
+	    char decompressed[1024];
+	    uLong sourceLen = strlen(source);
+	    uLong compressedLen = sizeof(compressed);
+	    uLong decompressedLen = sizeof(decompressed);
 
-int main() {
-    char source[] = "Bu bir örnek metindir.";
-    char compressed[1024];
-    char decompressed[1024];
-    uLong sourceLen = strlen(source);
-    uLong compressedLen = sizeof(compressed);
-    uLong decompressedLen = sizeof(decompressed);
+	    compress((Bytef *)compressed, &compressedLen, (const Bytef *)source, sourceLen);
+	    uncompress((Bytef *)decompressed, &decompressedLen, (const Bytef *)compressed, compressedLen);
 
-    compress((Bytef *)compressed, &compressedLen, (const Bytef *)source, sourceLen);
-    uncompress((Bytef *)decompressed, &decompressedLen, (const Bytef *)compressed, compressedLen);
+	    printf("Orjinal Metin: %s\n", source);
+	    printf("Sıkıştırılmış Metin: %s\n", compressed);
+	    printf("Açılmış Metin: %s\n", decompressed);
 
-    printf("Orjinal Metin: %s\n", source);
-    printf("Sıkıştırılmış Metin: %s\n", compressed);
-    printf("Açılmış Metin: %s\n", decompressed);
-
-    return 0;
-}
+	    return 0; 
+	}
 
 Bu örnekte, compress fonksiyonu ile source metni sıkıştırılır ve compressed dizisine kaydedilir. Ardından, uncompress fonksiyonu ile compressed dizisi açılır ve decompressed dizisine kaydedilir. Sonuç olarak, orijinal metin, sıkıştırılmış metin ve açılmış metin ekrana yazdırılır.
 
 zlib, Linux sistemlerinde sıkıştırma ve açma işlemleri için güvenilir ve yaygın olarak kullanılan bir kütüphanedir.
 
-zlib Derleme
----------------
+**zlib Derleme**
+----------------
 
-cd $HOME
-wget https://zlib.net/current/zlib.tar.gz
+.. code-block:: shell
 
-tar -xvf zlib.tar.gz
-cd zlib-1.3
-#https://www.linuxfromscratch.org/~thomas/multilib/chapter08/zlib.html
+	cd $HOME
+	wget https://zlib.net/current/zlib.tar.gz
 
-./configure --prefix=/
+	tar -xvf zlib.tar.gz
+	cd zlib-1.3
+	#https://www.linuxfromscratch.org/~thomas/multilib/chapter08/zlib.html
 
-make
-make install DESTDIR=$HOME/rootfs
+	./configure --prefix=/
+
+	make
+	make install DESTDIR=$HOME/rootfs
 
 

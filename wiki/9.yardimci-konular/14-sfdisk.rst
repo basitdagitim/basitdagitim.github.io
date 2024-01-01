@@ -13,7 +13,7 @@ Diskinizdeki mevcut bölümleri görüntülemek için sfdisk komutunu kullanabil
 sfdisk -l /dev/sda
 
 Disk bölümleri oluşturma:
-------------------------
+-------------------------
 
 Yeni bir disk bölümü oluşturmak için sfdisk komutunu kullanabilirsiniz. Örneğin, /dev/sda üzerinde yeni bir bölüm oluşturmak için aşağıdaki komutu kullanabilirsiniz:
 
@@ -22,7 +22,7 @@ echo ",,L" | sfdisk /dev/sda
 Bu komut, kullanılabilir tüm alanı kullanarak bir bölüm oluşturacaktır.
 
 Disk bölümlerini silme:
-----------------------
+-----------------------
 
 Bir disk bölümünü silmek için sfdisk komutunu kullanabilirsiniz. Örneğin, /dev/sda üzerindeki bir bölümü silmek için aşağıdaki komutu kullanabilirsiniz:
 
@@ -33,7 +33,7 @@ Bu komut, belirtilen bölümü silecektir.
 sfdisk komutunun daha fazla seçeneği ve kullanımı vardır. Daha fazla bilgi için sfdisk komutunun man sayfasını inceleyebilirsiniz:
 
 Bazı Örnekler
-------------
+-------------
 
 Örnek1:
 -------

@@ -15,9 +15,9 @@ Disk Hazırlanmalı
 Öncelikle **cfdisk** veya **fdisk** komutları ile diski bölümlendirelim. Ben bu anlatımda **cfdisk** kullanacağım.
 
 0. cfdisk komutuyla disk bölümlendirilmeli.
-	.. code-block:: shell
+.. code-block:: shell
 		
-		$ cfdisk /dev/sda
+	$ cfdisk /dev/sda
 
 1. gpt seçilmeli
 2. 512 MB type vfat alan(sda1)
@@ -27,10 +27,10 @@ Disk Hazırlanmalı
 6. Bu işlem sonucunda sadece sda1 sda2 olur
 7. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkfs.vfat /dev/sda1
-		$ mkfs.ext4 /dev/sda2
+	$ mkfs.vfat /dev/sda1
+	$ mkfs.ext4 /dev/sda2
 		
 e2fsprogs Paketi
 ^^^^^^^^^^^^^^^^
@@ -48,69 +48,70 @@ Dosya sistemini kopyalama
 Kurulum medyası **/cdrom** dizinine bağlanır.
 Kurulacak sistemin imajını bir dizine bağlayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 		
-		$ mkdir -p cdrom
-		$ mkdir -p source
-		$ mount -t iso9660 -o loop /dev/sr0 /cdrom/
-		$ mount -t squashfs -o loop /cdrom/live/filesystem.squashfs /source
+	$ mkdir -p cdrom
+	$ mkdir -p source
+	$ mount -t iso9660 -o loop /dev/sr0 /cdrom/
+	$ mount -t squashfs -o loop /cdrom/live/filesystem.squashfs /source
 
 Şimdi de disk bölümümüzü bağlayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkdir -p target
-		$ mkdir -p /target/boot
-		$ mount /dev/sda2 /target
-		$ mount -t vfat /dev/sda1 /target/boot
+	$ mkdir -p target
+	$ mkdir -p /target/boot
+	$ mount /dev/sda2 /target
+	$ mount -t vfat /dev/sda1 /target/boot
 
 Ardından dosyaları kopyalayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		# -p dosya izinlerini korur
-		# -r alt dizinlerle beraber kopyalar
-		# -f soru sormayı kapatır
-		# -v detaylı çıktıları gösterir
-		$ cp -prfv /source/* /target
+	# -p dosya izinlerini korur
+	# -r alt dizinlerle beraber kopyalar
+	# -f soru sormayı kapatır
+	# -v detaylı çıktıları gösterir
+	$ cp -prfv /source/* /target
 
 Daha sonra diski senkronize edelim.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ sync
+	$ sync
 
 
 Bootloader kurulumu
 ^^^^^^^^^^^^^^^^^^^
 grub kurulumu yapmak için grub paketinin kurulu olduğundan emin olun.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkdir -p /target/dev
-		$ mkdir -p /target/sys
-		$ mkdir -p /target/proc 
-		$ mkdir -p /target/run
-		$ mkdir -p /target/tmp
-		$ mount --bind /dev /target/dev
-		$ mount --bind /sys /target/sys
-		$ mount --bind /proc /target/proc
-		$ mount --bind /run /target/run
-		$ mount --bind /tmp /target/tmp
-		
-		# Bunun yerine aşağıdaki gibi de girilebilir.
-		for dir in /dev /sys /proc /run /tmp ; do
-			mount --bind /$dir /target/$dir
-		done
-		$ chroot /target
+	$ mkdir -p /target/dev
+	$ mkdir -p /target/sys
+	$ mkdir -p /target/proc 
+	$ mkdir -p /target/run
+	$ mkdir -p /target/tmp
+	$ mount --bind /dev /target/dev
+	$ mount --bind /sys /target/sys
+	$ mount --bind /proc /target/proc
+	$ mount --bind /run /target/run
+	$ mount --bind /tmp /target/tmp
+
+	# Bunun yerine aşağıdaki gibi de girilebilir.
+	for dir in /dev /sys /proc /run /tmp ; do
+	mount --bind /$dir /target/$dir
+	done
+	$ chroot /target
 
 
 Grub Kuralım
 ^^^^^^^^^^^^
-	.. code-block:: shell
 
-		# kurulu sistemden bağımsız çalışması için --removable kullanılır.
-		$ grub-install --removable --boot-directory=/boot --efi-directory=/boot /dev/sda
+.. code-block:: shell
+
+	# kurulu sistemden bağımsız çalışması için --removable kullanılır.
+	$ grub-install --removable --boot-directory=/boot --efi-directory=/boot /dev/sda
 
 Grub yapılandırması
 ^^^^^^^^^^^^^^^^^^^
@@ -119,10 +120,10 @@ Grub yapılandırması
 3. /boot/grub/grub.cfg konumunda dostamızı oluşturalım(vi, touch veya nano ile).
 4. dev/sda2 diskimizim uuid değerimizi bulalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ blkid | grep /dev/sda2
-		/dev/sda2: UUID="..." BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="..."
+	$ blkid | grep /dev/sda2
+	/dev/sda2: UUID="..." BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="..."
 
 Şimdi aşağıdaki gibi bir yapılandırma dosyası yazalım ve /boot/grub/grub.cfg dosyasına kaydedelim.
 Burada uuid değerini ve çekirdek sürümünü düzenleyin.
@@ -151,10 +152,11 @@ Fstab dosyası
 
 Bu dosyayı doldurarak açılışta hangi disklerin bağlanacağını ayarlamalıyız. /etc/fstab dosyasını aşağıdakine uygun olarak doldurun.
 
+.. code-block:: shell
 
-# <fs>     <mountpoint>    <type>     <opts>      <dump/pass>
-/dev/sda1       /boot       vfat    defaults,rw     0       1
-/dev/sda2       /           ext4    defaults,rw     0       1
+	# <fs>     <mountpoint>    <type>     <opts>      <dump/pass>
+	/dev/sda1       /boot       vfat    defaults,rw     0       1
+	/dev/sda2       /           ext4    defaults,rw     0       1
 
 
 **Not:** Disk bölümü konumu yerine **UUID="<uuid-değeri>"** şeklinde yazmanızı öneririm.

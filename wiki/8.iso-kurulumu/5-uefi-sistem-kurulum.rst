@@ -29,9 +29,10 @@ Bu anlatımda kurulum için **/boot** dizinini ayırmayı ve efi bölümü olara
 Öncelikle **cfdisk** veya **fdisk** komutları ile diski bölümlendirelim. Ben bu anlatımda **cfdisk** kullanacağım.
 
 0. cfdisk komutuyla disk bölümlendirilmeli.
-	.. code-block:: shell
+
+.. code-block:: shell
 		
-		$ cfdisk /dev/sda
+	$ cfdisk /dev/sda
 
 1. gpt seçilmeli
 2. 512 MB type uefi alan(sda1)
@@ -41,10 +42,10 @@ Bu anlatımda kurulum için **/boot** dizinini ayırmayı ve efi bölümü olara
 6. Bu işlem sonucunda sadece sda1 sda2 olur
 7. mkfs.vfat ve mkfs.ext4 ile diskler biçimlendirilir.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkfs.vfat /dev/sda1
-		$ mkfs.ext4 /dev/sda2
+	$ mkfs.vfat /dev/sda1
+	$ mkfs.ext4 /dev/sda2
 		
 e2fsprogs Paketi
 ^^^^^^^^^^^^^^^^
@@ -62,80 +63,81 @@ Dosya sistemini kopyalama
 Kurulum medyası **/cdrom** dizinine bağlanır.
 Kurulacak sistemin imajını bir dizine bağlayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 		
-		$ mkdir -p cdrom
-		$ mkdir -p source
-		$ mount -t iso9660 -o loop /dev/sr0 /cdrom/
-		$ mount -t squashfs -o loop /cdrom/live/filesystem.squashfs /source
+	$ mkdir -p cdrom
+	$ mkdir -p source
+	$ mount -t iso9660 -o loop /dev/sr0 /cdrom/
+	$ mount -t squashfs -o loop /cdrom/live/filesystem.squashfs /source
 
 Şimdi de disk bölümümüzü bağlayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkdir -p target || true
-		$ mkdir -p /target/boot || true
-		$ mkdir -p /target/boot/efi || true
-		$ mount /dev/sda2 /target || true
-		$ mount /dev/sda1 /target/boot/efi
+	$ mkdir -p target || true
+	$ mkdir -p /target/boot || true
+	$ mkdir -p /target/boot/efi || true
+	$ mount /dev/sda2 /target || true
+	$ mount /dev/sda1 /target/boot/efi
 
 Ardından dosyaları kopyalayalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		# -p dosya izinlerini korur
-		# -r alt dizinlerle beraber kopyalar
-		# -f soru sormayı kapatır
-		# -v detaylı çıktıları gösterir
-		$ cp -prfv /source/* /target
+	# -p dosya izinlerini korur
+	# -r alt dizinlerle beraber kopyalar
+	# -f soru sormayı kapatır
+	# -v detaylı çıktıları gösterir
+	$ cp -prfv /source/* /target
 
 Daha sonra diski senkronize edelim.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ sync
+	$ sync
 
 
 Bootloader kurulumu
 ^^^^^^^^^^^^^^^^^^^
 grub kurulumu yapmak için grub paketinini kurulu olduğundan emin olun.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mkdir -p /target/dev
-		$ mkdir -p /target/sys
-		$ mkdir -p /target/proc 
-		$ mkdir -p /target/run
-		$ mkdir -p /target/tmp
-		$ mount --bind /dev /target/dev
-		$ mount --bind /sys /target/sys
-		$ mount --bind /proc /target/proc
-		$ mount --bind /run /target/run
-		$ mount --bind /tmp /target/tmp
-		#efi alan bağlanıyor. Eğer uefi aktif edilmişse kernel **/sys/firmware/efi** tarafından budizinler ve dosyalar oluşuyor. 
-		#sistem uefi değise **/sys/firmware/efi** konumunda dosyalar olmayacaktır.
-		$ if [[ -d /sys/firmware/efi ]] ; then
-    			mount --bind /sys/firmware/efi/efivars /target/sys/firmware/efi/efivars
-		  fi
+	$ mkdir -p /target/dev
+	$ mkdir -p /target/sys
+	$ mkdir -p /target/proc 
+	$ mkdir -p /target/run
+	$ mkdir -p /target/tmp
+	$ mount --bind /dev /target/dev
+	$ mount --bind /sys /target/sys
+	$ mount --bind /proc /target/proc
+	$ mount --bind /run /target/run
+	$ mount --bind /tmp /target/tmp
+	#efi alan bağlanıyor. Eğer uefi aktif edilmişse kernel **/sys/firmware/efi** tarafından budizinler ve dosyalar oluşuyor. 
+	#sistem uefi değise **/sys/firmware/efi** konumunda dosyalar olmayacaktır.
+	$ if [[ -d /sys/firmware/efi ]] ; then
+    		mount --bind /sys/firmware/efi/efivars /target/sys/firmware/efi/efivars
+	  fi
 		
-		# Bunun yerine aşağıdaki gibi de girilebilir.
-		for dir in /dev /sys /proc /run /tmp ; do
-			mount --bind /$dir /target/$dir
-		done
-		$ chroot /target
+	# Bunun yerine aşağıdaki gibi de girilebilir.
+	for dir in /dev /sys /proc /run /tmp ; do
+		mount --bind /$dir /target/$dir
+	done
+	$ chroot /target
 
 Şimdi de uefi kullandığımız için efivar bağlayalım.
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ mount -t efivarfs efivarfs /sys/firmware/efi/efivarfs
+	$ mount -t efivarfs efivarfs /sys/firmware/efi/efivarfs
+	
 Grub Kuralım
 ^^^^^^^^^^^^
-	.. code-block:: shell
+.. code-block:: shell
 
-		# biz /boot ayırdığımız ve efi bölümü olarak kullanacağız.
-		# uefi kullanmayanlar --efi-directory belirtmemeliler.
-		# kurulu sistemden bağımsız çalışması için --removable kullanılır.
-		$ grub-install --removable --boot-directory=/boot --efi-directory=/boot --target=x86_64-efi /dev/sda
+	# biz /boot ayırdığımız ve efi bölümü olarak kullanacağız.
+	# uefi kullanmayanlar --efi-directory belirtmemeliler.
+	# kurulu sistemden bağımsız çalışması için --removable kullanılır.
+	$ grub-install --removable --boot-directory=/boot --efi-directory=/boot --target=x86_64-efi /dev/sda
 
 Grub yapılandırması
 ^^^^^^^^^^^^^^^^^^^
@@ -144,10 +146,10 @@ Grub yapılandırması
 3. /boot/grub/grub.cfg konumunda dostamızı oluşturalım(vi, touch veya nano ile).
 4. dev/sda2 diskimizim uuid değerimizi bulalım.
 
-	.. code-block:: shell
+.. code-block:: shell
 
-		$ blkid | grep /dev/sda2
-		/dev/sda2: UUID="..." BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="..."
+	$ blkid | grep /dev/sda2
+	/dev/sda2: UUID="..." BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="..."
 
 Şimdi aşağıdaki gibi bir yapılandırma dosyası yazalım ve /boot/grub/grub.cfg dosyasına kaydedelim.
 Burada uuid değerini ve çekirdek sürümünü düzenleyin.
@@ -175,9 +177,11 @@ Fstab dosyası
 
 Bu dosyayı doldurarak açılışta hangi disklerin bağlanacağını ayarlamalıyız. /etc/fstab dosyasını aşağıdakine uygun olarak doldurun.
 
-# <fs>                  <mountpoint>    <type>          <opts>          <dump/pass>
-/dev/sda1       /boot   vfat    defaults,rw     0       1
-/dev/sda2       /       ext4    defaults,rw     0       1
+.. code-block:: shell
+
+	# <fs>                  <mountpoint>    <type>          <opts>          <dump/pass>
+	/dev/sda1       /boot   vfat    defaults,rw     0       1
+	/dev/sda2       /       ext4    defaults,rw     0       1
 
 
 **Not:** Disk bölümü konumu yerine **UUID="<uuid-değeri>"** şeklinde yazmanızı öneririm.
