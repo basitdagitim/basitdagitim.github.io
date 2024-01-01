@@ -42,7 +42,7 @@ Bu yapının oluşturulması için temel komutları ve komut yorumlayıcının o
 
 
 
-Görüldüğü gibi ls komutunun çalışması için bağımlı olduğu kütüphane dosyaları bulunmaktadır. Bu dosyaları yeni oluşturduğumuz wrk klasörüne aynı dizin yapısında kopyalamamız gerekmektedir.
+Görüldüğü gibi ls komutunun çalışması için bağımlı olduğu kütüphane dosyaları bulunmaktadır. Bu dosyaları yeni oluşturduğumuz work klasörüne aynı dizin yapısında kopyalamamız gerekmektedir.
 Bu dosyalar eksiksiz olursa ls komutu çalışacaktır. Fakat bu işlemi tek tek yapmamız çok zahmetli bir işlemdir. Bu işi halledecek script dosyası aşağıda verilmiştir.
 
 Bağımlılık Scripti
