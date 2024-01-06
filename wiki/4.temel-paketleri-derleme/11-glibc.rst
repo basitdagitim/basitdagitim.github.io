@@ -22,9 +22,11 @@ glibc Derleme
 glibc Yükleme
 -------------
 
+**$HOME/rootfs** kalsörünü oluştrudan aşağıdaki gibi yükleme yapmalıyız.
+
 .. code-block:: shell
 
-	make install DESTDIR=$HOME/rootf # Ev Dizinindeki rootfs dizinine glibc yükleyelim.
+	make install DESTDIR=$HOME/rootfs # Ev Dizinindeki rootfs dizinine glibc yükleyelim.
 
 glibc Test Etme
 ---------------
@@ -63,7 +65,7 @@ Programı Test Etme
 
 **glibc** kütüphanemizin olduğu dizin dağıtımızın ana dizini oluyor.  **$HOME/rootfs/** konumuna **chroot** ile erişelim.
 
-Aşağıdaki gibi bir hata alacağız.
+Aşağıdaki gibi çalıştırdığımızda bir hata alacağız.
 
 .. code-block:: shell
 
