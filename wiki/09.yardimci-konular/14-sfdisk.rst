@@ -90,3 +90,7 @@ unit: sectors
 Aynı disk bölümlemesini ve düzenini başka bir aygıta uygulamak için:
 
 sfdisk /dev/sdb < my.layout 
+
+.. raw:: pdf
+
+   PageBreak

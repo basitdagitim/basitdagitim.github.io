@@ -70,7 +70,25 @@ Eğer belirmezsek /lib/konumuna yüklenecektir.
 
 	INSTALL_MOD_PATH="$HOME/distro/initrd" make modules_install
 
+Strip Yapma
+-----------
 
+
+Kernel Yukleme
+--------------
+
+
+Header Yukleme
+--------------
+
+
+libc Yukleme
+------------
+
+
+.. raw:: pdf
+
+   PageBreak
 
 
 

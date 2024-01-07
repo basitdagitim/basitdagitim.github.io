@@ -62,4 +62,6 @@ chroot canli /bin/bash
 Buişlemin yerine exec komutuyla bağlanırsak sistemimiz id "1" değeriyle çalıştıracaktır. 
 Eğer sistemin bu dosya sistemiyle açılmasını istiyorsak exec ile çalıştırıp id=1 olmasına dikkat etmeliyiz.
 
+.. raw:: pdf
 
+   PageBreak

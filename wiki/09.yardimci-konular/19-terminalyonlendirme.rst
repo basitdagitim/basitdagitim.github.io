@@ -1,5 +1,6 @@
+Terminal Yönlendirmesi
+++++++++++++++++++++++
 
-# Terminal Yönlendirmesi
 
 **İlk terminalde :**
 
@@ -48,3 +49,7 @@ $ exec &> >(tee >(cat >&/dev/pts/0))
 ls 
 
 Çıktı, siz yazarken bile her iki terminalde de gerçek zamanlı olarak gösterilecektir. 
+
+.. raw:: pdf
+
+   PageBreak

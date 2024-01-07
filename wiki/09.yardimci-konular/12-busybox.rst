@@ -31,3 +31,7 @@ Derleme bittiğinde kaynak kodun bulunduğu dizinde busybox dosyamız oluşmuş 
 
 Static olarak derlemiş olduğumuz busyboxu kullanarak minimal kök dizin oluşturabiliriz. Burada static yapı kallanılmayacaktır. 
 Sistemdeki /bin/busybox kullanılacaktır. Eğer yoksa busybox sisteme yüklenmelidir.
+
+.. raw:: pdf
+
+   PageBreak
