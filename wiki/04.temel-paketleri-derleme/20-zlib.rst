@@ -31,4 +31,8 @@ zlib, genellikle dosya sıkıştırma, ağ iletişimi ve veritabanı yönetimi g
 	make 
 
 	make install DESTDIR=$HOME/rootfs
+	
+.. raw:: pdf
+
+   PageBreak
 
