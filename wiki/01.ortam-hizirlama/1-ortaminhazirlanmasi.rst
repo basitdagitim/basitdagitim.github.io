@@ -6,7 +6,7 @@ Bu dağıtımı hazırlaken Debian dağıtımı kullanıldı. Bazı paketler iç
 
 Bir dağıtım hazırlamak için çeşitli paketler lazımdır. Bu paketler;
 
-- debootstrap	: Dağıtım hazırlaken kullanılacak chroot uygulaması bu paket ile gelmektedir. chroot ayrı bir konu başlığıyla anlatılacaktır.
+- debootstrap	: Dağıtım hazırlarken kullanılacak chroot uygulaması bu paket ile gelmektedir. chroot ayrı bir konu başlığıyla anlatılacaktır.
 - make		: Paket derlemek için uygulama
 - squashfs-tools	: Hazırladığımız sistemi sıkıştırılmış dosya halinde sistem görüntüsü oluşturmamızı sağlayan paket.
 - gcc		: c kodlarımızı derleyeceğimiz derleme aracı.
@@ -22,21 +22,25 @@ Bir dağıtım hazırlamak için çeşitli paketler lazımdır. Bu paketler;
 .. code-block:: shell
 
 	sudo apt update
-	sudo apt install debootstrap make squashfs-tools gcc wget unzip xz-utils tar zstd -y
+	sudo apt install debootstrap xorriso mtools make squashfs-tools gcc wget unzip xz-utils tar zstd -y
 
 Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyiz. Bu dokümanda sistem için kurulum dizini $HOME/distro/rootfs olarak kullanacağız.
 
-Ortamın hazırlanmasından sonra bazı konuları bilmemiz gerelmektedir. Bunlar;
+Ortamın hazırlanmasından sonra bazı konuları bilmemiz gerelmektedir. Bunlar; 
 
-1. Derleme(Dinamik/Static)
-2. chroot Kullanımı
+1. Derleme(Dinamik/Static) 
+2. chroot Kullanımı: :ref:`RST Overview` 
 3. Kernel/Modül Derleme
 4. initrd Tasarlama
 5. İso Oluşturma
 6. Canlı Sistem Oluşturma Kullanma
-6. qemu Kullanmı
-6. sfdisk Kullanımı
-7. Canlı Sistemden Kurulum Yapma
+7. qemu Kullanmı
+8. sfdisk Kullanımı
+9. Canlı Sistemden Kurulum Yapma
+
+Burada liste halinde verilen konu başlıkları bu dokümanın son bölümünde anlatılmaktadır. Bu konularla ilgili bir dağıtım hazırlanırken gerekli bilgiler verilmiştir.
+
+
 
 
 .. raw:: pdf

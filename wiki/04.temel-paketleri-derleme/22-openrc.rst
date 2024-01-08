@@ -1,10 +1,10 @@
 OpenRC
 ++++++
 
-Openrc sistem açılışında çalışacak uygulamaları çalışrıran servis yöneticisidir.
+Openrc sistem açılışında çalışacak uygulamaları çalıştıran servis yöneticisidir.
 
 Derleme
-^^^^^^^
+-------
 
 Kaynak koddan derlemek için aşağıdaki adımları izlemelisiniz:
 
@@ -27,13 +27,13 @@ Kaynak koddan derlemek için aşağıdaki adımları izlemelisiniz:
 	
 
 Çalıştırılması
-^^^^^^^^^^^^^^
+--------------
 
 Openrc servis yönetiminin çalışması için boot parametrelerine yazılması gerekmektedir. 
 **/boot/grub.cfg** içindeki **linux /vmlinuz init=/usr/sbin/openrc-init root=/dev/sdax** olan satırda **init=/usr/sbin/openrc-init** yazılması gerekmektedir. Artık sistem openrc servis yöneticisi tarafından uygulamalar çalıştırılacak ve sistem hazır hale getirilecek.
 
 Basit kullanım
-^^^^^^^^^^^^^^
+--------------
 
 Servis etkinleştirip devre dışı hale getirmek için **rc-update** komutu kullanılır. Aşağıda **udhcpc** internet servisi örnek olarak gösterilmiştir. **/etc/init.d/** konumunda **udhcpc** dosyamızın olması gerekmektedir.
 
@@ -44,3 +44,7 @@ Servis etkinleştirip devre dışı hale getirmek için **rc-update** komutu kul
 	# servisi devre dışı yapmak için
 	$ rc-update del udhcpc boot
 	# Burada udhcpc servis adı boot ise runlevel adıdır.
+	
+.. raw:: pdf
+
+   PageBreak

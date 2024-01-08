@@ -4,10 +4,6 @@ initramfs-tools Nedir
 initramfs-tools, Debian tabanlı sistemlerde kullanılan bir araçtır ve initramfs (initial RAM file system) oluşturmak için kullanılır. Bu araç, sistem açılırken kullanılan geçici bir dosya sistemini oluşturur ve gerekli modülleri yükler. initramfs için farklı araçlarda kullanılabilir.
 Kullanıcı isterse kendi scriptinide kullanabilir. Debian dışında **dracut** aracıda initramfs oluşturmak ve güncellemek için kullanılabilir.
 
-Dosya /etc/initramfs-tools/modulesinitramfs'a modülleri dahil etmek için kullanılır. Bu dosyada varsayılan olarak yorumlanan bazı satırlar vardır. Bu, bu dosyanın fiilen boş olduğu anlamına gelebilir.
-
-O dosyanın varsayılan içeriğini buraya gönderiyorum. Bunu kopyalayıp bir metin düzenleyici ve root ayrıcalığıyla dosyalarınıza yapıştırmak isteyebilirsiniz. Dosyayı root gücü kullanımıyla açmak için sudo gedit /etc/initramfs-tools/modulesemretmek.
-
 **/etc/initramfs-tools/modules**
 
 **modules** dosyası initrd oluşturulma ve güncelleme durumunda isteğe bağlı olarak modullerin eklenmesisini ve **initrd** açıldığında modülün yüklenmesini istiyorsak **/etc/initramfs-tools/modules** komundaki dosyayı  aşağıdaki gibi düzenlemeliyiz. Bu dosya içinde **ext4**, **vfat** ve diğer yardımcı moduller eklenmiş durumdadır. 

@@ -8,18 +8,18 @@ Dağıtım Hazırlama
 	$HOME/distro/iso/boot/grub/grub.cfg
 	$HOME/distro/iso/boot/initrd.img
 	$HOME/distro/iso/boot/vmlinuz
-	$HOME/distro/live/filesystem.squashfs
+	$HOME/distro/iso/live/filesystem.squashfs
 	
 **filesystem.squashfs Hazırlama**
 ---------------------------------
 
 **filesystem.squashfs** dosyası **/initrd.img** dosyasına benzer yapıda hazırlanacak.
-En büyük faklılık **init** çalışabilir dosya içeriğinde yapılmalı. Yapı **/initrd.img** dizin yapısı gibi hazırlandıktan sonra **filesystem.squashfs** oluşturulmalı ve **$HOME/distro/live/filesystem.squashfs** konuma kopyalanmalıdır. Aşağıdaki komutlarla **filesystem.squashfs** hazırlanıyor ve  **$HOME/distro/live/** konumuna taşınıyor.
+En büyük faklılık **init** çalışabilir dosya içeriğinde yapılmalı. Yapı **/initrd.img** dizin yapısı gibi hazırlandıktan sonra **filesystem.squashfs** oluşturulmalı ve **$HOME/distro/iso/live/filesystem.squashfs** konuma kopyalanmalıdır. Aşağıdaki komutlarla **filesystem.squashfs** hazırlanıyor ve  **$HOME/distro/iso/live/** konumuna taşınıyor.
 
 .. code-block:: shell
 
 	cd $HOME/distro/
-	mksquashfs $rootfs $HOME/distro/filesystem.squashfs -comp xz -wildcards
+	mksquashfs $HOME/distro/rootfs $HOME/distro/filesystem.squashfs -comp xz -wildcards
 	mv $HOME/distro/filesystem.squashfs $HOME/distro/iso/live/filesystem.squashfs
 
 .. raw:: pdf
