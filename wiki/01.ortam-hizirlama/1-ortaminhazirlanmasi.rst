@@ -1,5 +1,5 @@
-Dağıtım İçin Ortamın Hazırlanması
-=================================
+Dağıtım Ortamın Hazırlanması
+++++++++++++++++++++++++++++
 
 Dağıtım hazırlarken sistemin derlenmesi ve gerekli ayarlamaların yapılabilmesi için bir linux dağıtımı gerekmektedir. Tecrübeli olduğunuz bir dağıtımı seçmenizi tavsiye ederim. Fakat seçilecek dağıtım Gentoo olması daha hızlı ve sorunsuz sürece devam etmenizi sağlayacaktır.
 Bu dağıtımı hazırlaken Debian dağıtımı kullanıldı. Bazı paketler için, özellikle bağımlılık sorunları yaşanan paketler için ise Gentoo kullanıldı.
@@ -24,7 +24,20 @@ Bir dağıtım hazırlamak için çeşitli paketler lazımdır. Bu paketler;
 	sudo apt update
 	sudo apt install debootstrap make squashfs-tools gcc wget unzip xz-utils tar zstd -y
 
-Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyiz. Bu dokümanda sistem için kurulum dizini $HOME/rootfs olarak kullanacağız.
+Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyiz. Bu dokümanda sistem için kurulum dizini $HOME/distro/rootfs olarak kullanacağız.
+
+Ortamın hazırlanmasından sonra bazı konuları bilmemiz gerelmektedir. Bunlar;
+
+1. Derleme(Dinamik/Static)
+2. chroot Kullanımı
+3. Kernel/Modül Derleme
+4. initrd Tasarlama
+5. İso Oluşturma
+6. Canlı Sistem Oluşturma Kullanma
+6. qemu Kullanmı
+6. sfdisk Kullanımı
+7. Canlı Sistemden Kurulum Yapma
+
 
 .. raw:: pdf
 

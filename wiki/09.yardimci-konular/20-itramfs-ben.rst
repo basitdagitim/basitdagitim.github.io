@@ -2,7 +2,7 @@ Linux Tabanlı Sistem Tasarımı
 +++++++++++++++++++++++++++++
 
 Sistem İçin Gerekli Olan Dosyalar Ve Açılış Süreci
-++++++++++++++++++++++++++++++++++++++++++++++++++
+--------------------------------------------------
 
 Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterli. 
 
@@ -40,7 +40,8 @@ Bir linux siisteminin açılış süreci şu şekilde olmaktadır.
 Yazının devamında sistem için gerekli olan 3 temel dosyanın hazırlanması ve iso yapılma süreci anlatılacaktır.
 
 initrd Nedir? Nasıl Hazırlanır?
-+++++++++++++++++++++++++++++++
+-------------------------------
+
 initrd (initial RAM disk), Linux işletim sistemlerinde kullanılan bir geçici dosya sistemidir. Bu dosya sistemi, işletim sistemi açılırken kullanılan bir köprü görevi görür ve gerçek kök dosya sistemine geçiş yapmadan önce gerekli olan modülleri ve dosyaları içerir.Ayrıca, sistem başlatıldığında kök dosya sistemine erişim sağlamadan önce gerekli olan dosyaları yüklemek için de kullanılabilir.
     
 Gerekli olacak dosyalarımızın dizin yapısı ve konumu aşağıdaki gibi olmalıdır. Anlatım buna göre yapalacaktır. Örneğin S1 ifadesi satır 1 anlamında anlatımı kolaylaştımak için yazılmıştır. Aşağıdaki yapıyı oluşturmak için yapılması gerekenleri adım adım anlatılacaktır. 
@@ -67,7 +68,8 @@ Gerekli olacak dosyalarımızın dizin yapısı ve konumu aşağıdaki gibi olma
 
 	
 Dizin Yapısının oluşturulması
-+++++++++++++++++++++++++++++
+-----------------------------
+
 Aşağıdaki komutları çalıştırdığımızda dizin yapımız oluşacaktır.   
 	.. code-block:: shell
 
@@ -86,7 +88,8 @@ Aşağıdaki komutları çalıştırdığımızda dizin yapımız oluşacaktır.
 
 
 S1- distro/initrd/bin/busybox
-+++++++++++++++++++++++++++++
+-----------------------------
+
 busybox hakkında bilgi almak için busybox yazısında anlatılmıştır. Burada sisteme nasıl ekleneceği anlatılacaktır.
 busybıx dosyamızın bağımlılıklarının **lddscript.sh** scripti ile initrd içine kopyalayacağız. Yazının devamında **Bağımlılık Tespiti** konu başlığı altında anlatılmıştır.
 	
@@ -96,7 +99,8 @@ busybıx dosyamızın bağımlılıklarının **lddscript.sh** scripti ile initr
 		lddscript.sh initrd/bin/busybox initrd/ #sistemden busybox bağımlılıkları initrd dizinimize kopyalar.
 
 S2-S8 distro/initrd/bin/kmod
-++++++++++++++++++++++++++++
+----------------------------
+
 kmod yazısında kmod anlatılmıştır. Burada sisteme nasıl ekleneceği anlatılacaktır.
 	
 	.. code-block:: shell
@@ -111,7 +115,8 @@ kmod yazısında kmod anlatılmıştır. Burada sisteme nasıl ekleneceği anlat
 		ln -s kmod initrd/bin/rmmod	 #kmod sembolik link yapılarak rmmode hazırlandı.
 
 S9- distro/initrd/lib/modules/$(uname -r)/moduller
-++++++++++++++++++++++++++++++++++++++++++++++++++
+--------------------------------------------------
+
 Bu bölümde modüller hazırlanacak. Burada dikkat etmemiz gereken önemli bir nokta kullandığımız kernel versiyonu neyse **initrd/lib/modules/modules** altında oluşacak dizinimiz aynı olmalıdır. Bundan dolayı **initrd/lib/modules/$(uname -r)** şeklinde dizin oluşturulmuştur. Aşağıda kullandığımız 2. satırdaki **/sbin/depmod --all --basedir=initrd**, **initrd/lib/modules/$(uname -r)/moduller** altındaki modullerimizin indeksinin oluşturuyor.
 
 	.. code-block:: shell
@@ -129,7 +134,7 @@ Bu bölümde modüller hazırlanacak. Burada dikkat etmemiz gereken önemli bir 
 		/sbin/depmod --all --basedir=initrd	#modüllerin indeks dosyası oluşturuluyor
 		
 S9- distro/initrd/bin/systemd-udevd
-+++++++++++++++++++++++++++++++++++
+-----------------------------------
 	
 udev, Linux çekirdeği tarafından sağlanan bir altyapıdır ve donanım aygıtlarının dinamik olarak algılanmasını ve yönetilmesini sağlar. systemd-udevd ise udev'in bir bileşenidir ve donanım olaylarını işlemek için kullanılır. Daha detaylı bilgi için udev yazısında anlatılmıştır. systemd için **/lib/systemd/systemd-udevd**, no systemd için **/sbin/udevd** kullanılır. Biz systemd için tasarladığımız için **/lib/systemd/systemd-udevd** kullanıyoruz.
 	
@@ -139,7 +144,8 @@ udev, Linux çekirdeği tarafından sağlanan bir altyapıdır ve donanım aygı
 		lddscript initrd/bin/systemd-udevd initrd/ #sistemden kütüphaneler kopyalandı..
 
 S10- distro/initrd/bin/udevadm
-++++++++++++++++++++++++++++++
+------------------------------
+
 udevadm, Linux işletim sistemlerinde kullanılan bir araçtır. Bu araç, udev (Linux çekirdeği tarafından sağlanan bir hizmet) ile etkileşim kurmamızı sağlar. udevadm, sistemdeki aygıtların yönetimini kolaylaştırmak için kullanılır.
 
 udevadm komutu, birçok farklı parametreyle kullanılabilir. İşte bazı yaygın kullanımları:
@@ -161,7 +167,7 @@ Bu sadece bazı temel kullanımlardır ve udevadm'nin daha fazla özelliği vard
 		lddscript initrd/bin/udevadm initrd/ #sistemden kütüphaneler kopyalandı..
 
 S12- distro/etc/udev/rules.d--S13- distro/lib/udev/rules.d
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-----------------------------------------------------------
 
 "rules" kelimesi, Linux işletim sistemi veya bir programda belirli bir davranışı tanımlayan ve yönlendiren kuralları ifade eder. Bu kurallar, sistem veya programın nasıl çalışacağını belirlemek için kullanılır ve genellikle yapılandırma dosyalarında veya betiklerde tanımlanır.
 
@@ -183,7 +189,8 @@ Aşağıda sisteme ait kurralar initrd sistemimize kopyalanmaktadır.
 		cp /lib/udev/rules.d -rf  initrd/lib/udev/
 		
 S14- distro/initrd/bin/init
-+++++++++++++++++++++++++++
+---------------------------
+
 kernel ilk olarak initrd.img dosyasını ram'e yükleyecek ve ardından **init** dosyasının arayacaktır. Bu dosya bir script dosyası veya binary bir dosya olabilir. Bu tasarımda script dosya olacaktır. İçeriği aşağıdaki gibi olacaktır. 
 
 .. code-block:: shell
@@ -235,7 +242,8 @@ Aslında bu işlemi yapan şey busybox ikili dosyası.
 
 
 S15- distro/iso/initrd.img - S16- distro/iso/vmlinuz 
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+----------------------------------------------------
+
 initrd.img dosyası kernel(vmlinuz) ile birlikte kullanılan belleğe ilk yüklenen dosyadır. Bu dosyanın görevi sistemin kurulu olduğu diski tanımak için gereken modülleri yüklemek ve sistemi başlatmaktır. Bu dosya /boot/initrd.img-xxx konumunda yer alır. initrd.img dosyası üretmek için 
 
 .. code-block:: shell
@@ -244,7 +252,8 @@ initrd.img dosyası kernel(vmlinuz) ile birlikte kullanılan belleğe ilk yükle
 	mv initrd/initrd.img iso/boot/initrd.img #daha önce oluşturduğumuz **initrd.img** dosyamızı taşıyoruz.
 
 S17- distro/iso/grub/grub.cfg
-+++++++++++++++++++++++++++++
+-----------------------------
+
 grub menu dosyası oluşturuluyor.
 
 .. code-block:: shell
@@ -257,8 +266,8 @@ grub menu dosyası oluşturuluyor.
 
 Yukarıdaki script **iso/boot/grub/grub.cfg** dosyasının içeriği olacak şekilde ayarlanır.
 
-İso Dosyasının Oluşturulması
-++++++++++++++++++++++++++++
+İso Oluşturma
+-------------
 
 .. code-block:: shell
 
@@ -270,7 +279,8 @@ Artık sistemi açabilen ve tty açıp bize suna bir yapı oluşturduk. Çalış
 **qemu-system-x86_64 -cdrom distro.iso -m 1G** komutuyla çalıştırıp test edebiliriz. 
 
 Bağımlılıkların Tespiti
-+++++++++++++++++++++++
+-----------------------
+
 İkili dosyasının iki tür derlenme şekli vardır(statik ve dinamik). Statik derleme gerekli olan kütüphaneleri içerisinde barındıran tek bir dosyadır. Dinamik olan ise gerekli olan kütüphane dosyaları ikili dosya dışında tutulmaktadır. İkili dosyamızın bağımlılıklarının bulunması için aşağıdaki scripti kullanabiliriz. Scripti lddscript.sh dosyası olarak kaydedip kullanabilirsiniz. **bash lddscript.sh /bin/ls /tmp/test** şeklinde kullandığımızda /tmp/test/ dizinine **ls** ikili dosyasının konumunu ve bağımlılıklarını kopyalayacaktır.
     
     .. code-block:: shell
@@ -305,7 +315,9 @@ Bağımlılıkların Tespiti
 	done
 
 
+.. raw:: pdf
 
+   PageBreak
 
 
 
