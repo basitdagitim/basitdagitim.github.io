@@ -1,3 +1,5 @@
+.. _derlemebagimlilik:
+
 Derleme türleri
 ---------------
 Paketler derlenirken farklı derleme araçları ve derleyiciler kullanılır. Bu bölümde kaynak kod derleme ile ilgili bilgiler verilecektir. Anlatım için C programlama dili ve gcc tercih edilecektir.

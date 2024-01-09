@@ -1,3 +1,5 @@
+.. _temelpakaetler:
+
 Temel Paketler
 ++++++++++++++
 

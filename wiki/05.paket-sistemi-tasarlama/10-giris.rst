@@ -1,5 +1,7 @@
-Paket Sitemi
-+++++++++++++
+.. _paketsistemi:
+
+**Paket Sitemi**
+++++++++++++++++
 
 Dağıtımlarda uygulamalar paketler halinde hazırlanır. Bu paketleri dağıtımda kullanabilmek için temel işlemler şunlardır;
 

@@ -1,5 +1,7 @@
-Linux Tabanlı Sistem Tasarımı
-+++++++++++++++++++++++++++++
+.. _initrdtasarimi:
+
+initrd Tasarımı
++++++++++++++++
 
 Sistem İçin Gerekli Olan Dosyalar Ve Açılış Süreci
 --------------------------------------------------

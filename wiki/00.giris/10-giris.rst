@@ -17,14 +17,14 @@ Dağıtım Nasıl Hazırlanmalı?
 Bir dağıtım hazırlamak için orta seviye linux komutları ve kavramları bilmeliyiz. Bu bağlamda bu dokümanı okurken yabancı olduğunuz terimleri araştırmanızı tavsiye ederim.
 Bir dağıtım için bilinmesi gereken konuları maddeler halinde şöyle sıralayabiliriz.
 
-1. Dağıtım Ortamının Hazırlanması
-2. Derleme ve Bağımlılık
-3. chroot Nedir?
-4. Temel Paketleri Derleme
-5. Paket Sistemi Tasarlama
-6. initrd Hazırlama
-7. Sistemin Hazırlanması
-8. İsonun Kurulması
+1. Dağıtım Ortamının Hazırlanması :ref:`dagitimortamininhazirlanmasi`
+2. Temel Paketleri Derleme :ref:`temelpaketler`
+3. Paket Sistemi Tasarlama :ref:`paketsistemi`
+4. initrd Hazırlama :ref:`initrdhazirlama`
+5. İso Hazırlama :ref:`isohazirlama`
+6. Sistem Kurulması :ref:`sistemkurma`
+7. chroot Nedir? :ref:`_chrootnedir`
+8. Derleme ve Bağımlılık :ref:`derlemebagimlilik`
 
 
 Burada sıralanan maddeler konu başlıkları olarak anlatılacaktır.

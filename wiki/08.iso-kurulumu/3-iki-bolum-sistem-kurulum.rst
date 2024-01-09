@@ -1,5 +1,6 @@
 İki Bölüm Kurulum
-=================
++++++++++++++++++
+
 Bu bölümde **Ext4** dosya sistemine grub kullanarak kurulum anlatılacaktır.
 Anlatım boyunca **/dev/sda** diski üzerinden örnekleme yapılmıştır. Siz kendi diskinize göre düzenleyebilirsiniz.
 Diskler üzerinde işlem yapabilmek için evdev veya udevd servisi çalışıyor olmalı.

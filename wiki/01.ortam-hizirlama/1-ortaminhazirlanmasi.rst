@@ -1,3 +1,5 @@
+.. _dagitimortamininhazirlanmasi:
+
 Dağıtım Ortamın Hazırlanması
 ++++++++++++++++++++++++++++
 
@@ -29,7 +31,7 @@ Paket kurulumu yapıldıktan sonra kurulum için bir yeri(hedefi) belirlemelliyi
 Ortamın hazırlanmasından sonra bazı konuları bilmemiz gerelmektedir. Bunlar; 
 
 1. Derleme(Dinamik/Static) 
-2. chroot Kullanımı: :ref:`RST Overview` 
+2. chroot Kullanımı: :ref:`_chrootnedir` 
 3. Kernel/Modül Derleme
 4. initrd Tasarlama
 5. İso Oluşturma

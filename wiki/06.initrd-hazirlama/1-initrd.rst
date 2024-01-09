@@ -1,35 +1,32 @@
+.. _initrdhazirlama:
+
 initrd
 ++++++
 
 initrd (initial RAM disk), Linux işletim sistemlerinde kullanılan bir geçici dosya sistemidir. Bu dosya sistemi, işletim sistemi açılırken kullanılan bir köprü görevi görür ve gerçek kök dosya sistemine geçiş yapmadan önce gerekli olan modülleri ve dosyaları içerir.Ayrıca, sistem başlatıldığında kök dosya sistemine erişim sağlamadan önce gerekli olan dosyaları yüklemek için de kullanılabilir.
+Bu bölümü uygualamadan önce uygualam adımlarını daha anlayabilmek için mutlaka initr tasalama konusunu okumalısınız. :ref:`initrdtasarimi` 
 
-**Temel Dosyalar Ve Açılış Süreci**
------------------------------------
+**Temel Dosyalar**
+------------------
 
-Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterlidir. 
+Linux sisteminin açılabilmesi için aşağıdaki 3 dosya yeterlidir. Bu dosyalar yardımıyla sistem açılışı yapılır ve diskimizde bulunan sistemi bu 3 dosya yardımıyla  çalıştırır ve hazır hale getiririz.
+Şimdi sısrasıyla 3 dosyamızı nasıl hazırlayacağımızı adım adım uygulayalım. Doayaları moluşturduktan sonrada iso haline getirerek sistemi çalışır hale getirelim.
 
-    .. code-block:: shell
+.. code-block:: shell
 
 	distro/iso/boot/initrd.img
 	distro/iso/boot/vmlinuz
 	distro/iso/boot/grub/grub.cfg
 	
-Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra;
-
-.. code-block:: shell
-
-	grub-mkrescue iso/ -o distro.iso #iso doyamız oluşturulur.
-	
-Bu komut çalışınca **distro.iso** dosyası elde ederiz. Artık iso dosyamız boot edebilen hazırlanmış bir dosyadır. Burada bazı sorulara cevap vermemiz gerekmektedir. 
-
 **distro/iso/boot/initrd.img** dosyası sistemin açılış sürecinde ön işlemleri yaparak gerçek sisteme geçiş sürecini yöneten bir dosyadır. Yazın devamında nasıl hazırlanacağı anlatılacaktır. 
 
 **distro/iso/boot/vmlinuz** dosyamız kernelimiz oluyor. Ben kullandığım debian sisteminin mevcut kernelini kullandım. İstenirse kernel derlenebilir. 
 
 **distro/iso/boot/grub/grub.cfg** dosyamız ise initrd.img ve vmlinuz dosyalarının grub yazılımını nerede bulacağını gösteren yapılandırma dosyasıdır.
 
-**Bir linux sisteminin açılış süreci şu şekilde olmaktadır.**
--------------------------------------------------------------
+
+**linux Açılış Süreci**
+-----------------------
  
 1. Bilgisayara Güç Verilmesi
 2. Bios İşlemleri Yapılıyor(POST)
@@ -46,7 +43,7 @@ Yazının devamında sistem için gerekli olan 3 temel dosyanın(initrd.img, vml
    
 
 **initrd Dosya İçeriği**
--------------------------
+------------------------
 
 **initrd.img** dosyasını hazırlarken gerekli olacak dosyalarımızın dizin yapısı ve konumu aşağıdaki gibi olmalıdır. Anlatım buna göre yapalacaktır. Örneğin S1 ifadesi satır 1 anlamında anlatımı kolaylaştımak için yazılmıştır. Aşağıdaki yapıyı oluşturmak için yapılması gerekenleri adım adım anlatılacaktır. 
     
@@ -295,6 +292,20 @@ grub menu dosyası oluşturuluyor.
 	EOF
 
 Yukarıdaki script **iso/boot/grub/grub.cfg** dosyasının içeriği olacak şekilde ayarlanır.
+
+.. code-block:: shell
+
+	distro/iso/boot/initrd.img
+	distro/iso/boot/vmlinuz
+	distro/iso/boot/grub/grub.cfg
+	
+Bu dosyaları yukarıdaki gibi dizin konumlarına koyduktan sonra;
+
+.. code-block:: shell
+
+	grub-mkrescue iso/ -o distro.iso #iso doyamız oluşturulur.
+	
+Bu komut çalışınca **distro.iso** dosyası elde ederiz. Artık iso dosyamız boot edebilen hazırlanmış bir dosyadır.
 
 .. raw:: pdf
 

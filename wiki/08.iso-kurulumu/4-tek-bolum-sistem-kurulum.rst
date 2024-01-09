@@ -1,5 +1,5 @@
 Tek Bölüm Kurulum
-=================
++++++++++++++++++
 Diskler üzerinde işlem yapabilmek için evdev veya udevd servisi çalışıyor olmalı.
 Ayrıca aşağıdaki modüllerin yüklü olduğundan emin olun.
 Anlatım boyunca **/dev/sda** diski üzerinden örnekleme yapılmıştır. Siz kendi diskinize göre düzenleyebilirsiniz.
