@@ -1,5 +1,46 @@
-Paket Liste İndexi Güncelleme
-+++++++++++++++++++++++++++++
+Depo indexleme
+++++++++++++++
+Depo, paket yönetim sistemlerinde kurulacak olan paketleri içeren bir veri topluluğudur.
+Kaynak depo ve ikili depo olarak ikiye ayrılır.
+Depo içerisinde hiyerarşik olarak paketler yer alır.
+Index ise depoda yer alan paketlerin isimleri sürüm numaraları gibi bilgiler ile adreslerini tutan kayıttır.
+Paket yönetim sistemi index içerisinden gelen veriye göre gerekli paketi indirir ve kurar. Depo indexi aşağıdaki gibi olabilir:
+
+.. code-block:: yaml
+
+	Package: hello
+	Version: 1.0
+	Dependencies: test, foo, bar
+	Path: h/hello/hello_1.0_x86_64.zip
+	
+	Package: test
+	Version: 1.1
+	Path: t/test/test_1.1_aarch64.zip
+	
+	...
+
+Yukarıdaki örnekte paket adı bilgisi sürüm bilgisi ve bağımılılıklar gibi bilgiler ile paketin sunucu içerisindeki konumu yer almaktadır.
+Depo indexi paketlerin içinde yer alan paket bilgileri okunarak otomatik olarak oluşturulur.
+
+Örneğin paketlerimiz zip dosyası olsun ve paket bilgisini **.INFO** dosyası taşısın. Aşağıdaki gibi depo indexi alabiliriz.
+
+.. code-block:: shell
+
+	function index {
+	    > index.txt
+	    for i in $@ ; do
+	        unzip -p $i .INFO >> index.txt
+	        echo "Path: $i" >> index.txt
+	    done
+	}
+	index t/test/test_1.0_x86_64.zip h/hello/hello_1.1_aarch64.zip ...
+
+Bu örnekte paketlerin içindeki paket bilgisi içeren dosyaları uç uca ekledik.
+Buna ek olarak paketin nerede olduğunu anlamak içn paket konumunu da ekledik.
+
+
+bps Paket Liste İndexi Güncelleme
+---------------------------------
 
 Dağıtımlarda uygulamalar paketler halinde hazırlanır. Bu paketleri isimleri, versiyonları ve bağımlılık gibi temel bilgileri barındıran liste halinde tutan bir dosya oluşturulur. Bu dosyaya **index.lst** isim verebiliriz. Bu dokümanda bu listeyi tutan  **index.lst** doyası kullanılmıştır. Paket sisteminde güncelleme aslında **index.lst** dosyanın en güncellen halinin sisteme yüklenmesi olayıdır.
 
@@ -8,7 +49,7 @@ bps paketleme sisteminde **bpsupdate** scripti hazırlanmıştır. Bu script **i
 Paket güncelleme için iki script kullanmaktayız. Bunlar;
 
 **index.lst** Dosyasını Oluşturma
----------------------------------
+.................................
 
 .. code-block:: shell
 	
@@ -40,81 +81,17 @@ Bu script bps paket dosyalarımızın olduğu dizinde tüm paketleri açarak iç
 
 
 **index.lst** Dosyasını Güncelleme
-----------------------------------
+..................................
 
 **bpsupdate** dosya içeriği 
 
 .. code-block:: shell
 	
 	#!/bin/sh
-	./indirgentoo /tmp/index.lst https://bayramkarahan.github.io/distro-binary-package/index.lst
+	curl -O /tmp/index.lst https://basitsadigitim.github.io/binary-package/index.lst
 	
-
-
-   
-**index.lst** dosyamızı github üzerinden indiren scriptimiz tek bir satırdan oluşmaktadır. **indirgentoo** dosyamız gento üzerinde curl kütüphanesi kullanan bir c kodundan oluşmaktadır. 
-
-.. raw:: pdf
-
-   PageBreak
-
-İndirme Uygulaması
-------------------
-
-İndirme dosyamız **indirgentoo** dur. Adının böyle olmasının sebebi bağımlılık sorunlarını en aza indirmek için static olarak **gentoo** ortamında derlendiği için böyle adlandırıldı.  **indirgentoo** kodları aşağıdadır görülmektedir.
-
-.. code-block:: shell
-
-	#include <stdio.h>
-	#include <curl/curl.h>
-	struct FtpFile { const char *filename;  FILE *stream;};
-	static size_t my_fwrite(void *buffer, size_t size, size_t nmemb,void *stream){
-	  struct FtpFile *out = (struct FtpFile *)stream;
-	  if(!out->stream) {
-	    out->stream = fopen(out->filename, "wb");
-	    if(!out->stream) return -1; /* failure, cannot open file to write */
-	  }
-	  return fwrite(buffer, size, nmemb, out->stream);
-	}
-	int main(int argc, char **argv)	{
-	  const char *outname;	argv++;  outname = *argv;
-	  const char *fileaddress; argv++; fileaddress=*argv;
-	  printf("adı:%s",outname);
-	  printf("adres:%s",fileaddress);
-	  CURL *curl;
-	  CURLcode res;
-	  struct FtpFile ftpfile = {
-	    outname, /* name to store the file as if successful */
-	    NULL
-	  };
-
-	  curl_global_init(CURL_GLOBAL_DEFAULT);
-	  curl = curl_easy_init();
-	  if(curl) {
-	    curl_easy_setopt(curl, CURLOPT_URL,fileaddress);
-	    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, my_fwrite);/*Define our callback to get called when there's data to be written */
-	    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &ftpfile);/* Set a pointer to our struct to pass to the callback */
-	    curl_easy_setopt(curl, CURLOPT_USE_SSL, CURLUSESSL_ALL);/* We activate SSL and we require it for both control and data */
-	    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-	    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);/* Switch on full protocol/debug output */
-	    res = curl_easy_perform(curl);
-	    curl_easy_cleanup(curl);	    /* always cleanup */
-	    if(CURLE_OK != res) { /* we failed */    fprintf(stderr, "curl told us %d\n", res);  }
-	  }
-
-	  if(ftpfile.stream)
-	    fclose(ftpfile.stream); /* close the local file */
-	  curl_global_cleanup();
-	  return 0;
-	}
-
-**indirgentoo** çalışabilir dosyamız iki parametre almaktadır. ilk parametre indirilecek dosyanın nereye ve hangi adla kaydedileceği belirtiliyor. İkinci parametre ise hangi adresten inecekse ilgili adres bilgidir.
-
-.. code-block:: shell
-
-	./indirgentoo /tmp/index.lst https://bayramkarahan.github.io/distro-binary-package/index.lst
-
-Bu komut https://bayramkarahan.github.io/distro-binary-package/index.lst adresindeki dosyayı index.lst dosyasını //tmp/index.lst konumuna indirecektir.
+**index.lst** dosyamızı github üzerinden indiren scriptimiz tek bir satırdan oluşmaktadır.
+Bu komut https://basitsadigitim.github.io/binary-package/index.lst adresindeki dosyayı index.lst dosyasını /tmp/index.lst konumuna indirecektir.
 
 
 .. raw:: pdf

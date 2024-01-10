@@ -1,5 +1,26 @@
-Paket Kurma
-+++++++++++
+Paket Kurmna
+++++++++++++
+
+Paket kurulurken paket içerisinde bulunan dosyalar sisteme kopyalanır.
+Daha sonra istenirse silinebilmesi için paket içeriğinde dosyaların listesi tutulur.
+Bu dosya ayrıca paketin bütünlüğünü kontrol etmek için de kullanılır.
+
+Örneğin bir paketimiz zip dosyası olsun ve içinde dosya listesini tutan **.LIST** adında bir dosyamız olsun. Paketi aşağıdaki gibi kurabiliriz.
+
+.. code-block:: shell
+
+	cd /onbellek/dizini
+	unzip /dosya/yolu/paket.zip
+	cp -rfp ./* /
+	cp .LIST /paket/veri/yolu/paket.LIST
+
+Bu örnekte ilk satırda geçici dizine gittik ve paketi oraya açtık.
+Daha sonra paket içeriğini kök dizine kopyaladık.
+Daha sonra paket dosya listesini verilerin tutulduğu yere kopyaladık.
+Bu işlemden sonra paket kurulmuş oldu.
+
+bps Paket Kurma Scripti Tasarlama
+----------------------------------
 
 Hazırlanan dağıtımda paketlerin kurulması için  sırasıyla aşağıdaki işlem adımları yapılmalıdır.
 
@@ -19,7 +40,7 @@ Bu işlemler daha detaylandırılabilir. Bu işlemlerin detaylı olması paket s
 Burada basit seviyede kurulum yapan script kullanılmıştır. Detaylandırıldıkça doküman güncellenecektir. Kurulum scripti aşağıda görülmektedir.
 
 bpskur Scripti
---------------
+..............
 
 .. code-block:: shell
 	
@@ -69,7 +90,7 @@ bpskur Scripti
 
 
 bpskur Scriptini Kullanma
--------------------------
+.........................
 
 Script iki parametre almaktadır. İlk parametre paket adı. İkinci parametremiz ise nereye kuracağını belirten hedef olmalıdır. Bu scripti kullanarak readline paketi aşağıdaki gibi kurulabilir. 
 

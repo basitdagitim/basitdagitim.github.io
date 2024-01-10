@@ -3,7 +3,7 @@ Paket Oluşturma
 
 bps paket sisteminin temel parçalarından en önemlisi paket oluşturma uygulamasıdır. Dokümanda temel paketlerin nasıl derlendiği **Temel Paketler** başlığı altında anlatılmıştı. Bir paket üzerinden(readline) örneklendirerek paketimizi oluşturacak scriptimizi yazalım.
 
-Dokümanda readline paketi nasıl derleneceği aşağıdaki script ile ifade edilmişti.
+Dokümanda readline paketi nasıl derleneceği aşağıdaki script yapılıyor.
 
 .. code-block:: shell
 	
@@ -65,9 +65,9 @@ Aslında yukarıdaki **bpspaketle** ve **bpsbuild** adlı script dosyaları tek 
 	#genel değişkenler tanımlanır
 	initsetup() {}
 	
-	setup()	{} #bpsbuild dosyasından gelen fonksiyon
-	build()	{} #bpsbuild dosyasından gelen fonksiyon
-	package() {} #bpsbuild dosyasından gelen fonksiyon
+	setup()	{} #bpsbuild dosyasından gelen fonksiyon, "source bpsbuild" komutu sonucu gelen fonksiyon
+	build()	{} #bpsbuild dosyasından gelen fonksiyon, "source bpsbuild" komutu sonucu gelen fonksiyon
+	package() {} #bpsbuild dosyasından gelen fonksiyon, "source bpsbuild" komutu sonucu gelen fonksiyon
 	
 	packageindex() {}
 	packagecompress() {}
