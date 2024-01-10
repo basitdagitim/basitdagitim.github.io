@@ -39,8 +39,8 @@ Bu örnekte paketlerin içindeki paket bilgisi içeren dosyaları uç uca ekledi
 Buna ek olarak paketin nerede olduğunu anlamak içn paket konumunu da ekledik.
 
 
-bps Paket Liste İndexi Güncelleme
----------------------------------
+**bps Paket Liste İndexi Güncelleme**
+-------------------------------------
 
 Dağıtımlarda uygulamalar paketler halinde hazırlanır. Bu paketleri isimleri, versiyonları ve bağımlılık gibi temel bilgileri barındıran liste halinde tutan bir dosya oluşturulur. Bu dosyaya **index.lst** isim verebiliriz. Bu dokümanda bu listeyi tutan  **index.lst** doyası kullanılmıştır. Paket sisteminde güncelleme aslında **index.lst** dosyanın en güncellen halinin sisteme yüklenmesi olayıdır.
 

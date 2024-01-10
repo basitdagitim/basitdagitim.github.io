@@ -31,13 +31,13 @@ Daha sonra tekrar okuyup boş kalan dizinleri sildik.
 Son olarak palet listesi dosyamızı sildik.
 Bu işlem sonunda paket silinmiş oldu.
 
-bps Paket Kaldırma Scripti Tasarlama
-------------------------------------
+**bps Paket Kaldırma Scripti Tasarlama**
+----------------------------------------
 
 Dokumanda örnek olarak verilen bps paket sistemi için yukarıdaki paket kaldırma bilgilerini kullanarak tasarlanmıştır.
 
-bpskaldir scripti
-.................
+**bpskaldir** scripti
+.....................
 
 .. code-block:: shell
 	
@@ -77,8 +77,8 @@ Daha sonra tekrar okuyup boş kalan dizinleri sildik.
 Son olarak paket listesi dosyamızı sildik.
 Bu işlem sonunda paket silinmiş oldu.
 
-bpskaldir Kullanma
-..................
+**bpskaldir** Kullanma
+......................
 
 **bpskaldir** scripti aşağıdaki gibi kullanılır.
 

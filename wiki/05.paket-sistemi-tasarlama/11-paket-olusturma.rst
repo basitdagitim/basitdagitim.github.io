@@ -186,8 +186,8 @@ Diğer paketler için sadece hazırlanacak pakete uygun şekilde **bpsbuild** do
 
    PageBreak
    
-Paket Yapma
------------
+**Paket Yapma**
+---------------
 
 Bu bilgilere göre readline paketi nasıl oluşturulur onu görelim. Paketlerimizi oluşturacağımız bir dizin oluşturarak aşağıdaki işlemleri yapalım. Burada yine **readline** paketi anlatılacaktır.
 

@@ -13,22 +13,24 @@ Başlıca 2 tip paket sistemi vardır:
 Bir paket sistemi hem binary hem source paket sistemi özelliklerine sahip olabilir. Bununla birlikte son kullanıcı dağıtımlarında genellikle binary paket sistemleri tercih edilir.
 
 
-Binary Paket Sistemi
---------------------
+**Binary Paket Sistemi**
+------------------------
+
 Bu tip paket sistemlerinde önceden derlenmiş olan paketler hazır şekilde indirilir ve açılarak sistem ile birleştirilir. 
 Binary paket sistemlerinde paketler önceden derleme talimatları ile oluşturulmalıdır.
 
 Binary paket sistemine örnek olarak **apt**, **dnf**, **pacman** örnek verilebilir.
 
-Source Paket Sistemi
---------------------
+**Source Paket Sistemi**
+------------------------
+
 Bu tip paket sistemlerinde derleme talimatları kurulum yapılacak bilgisayar üzerinde kullanılarak paketler kurulum yapılacak bilgisayarda oluşturulur ve kurulur.
 
 Source paket sistemine örnek olarak **portage** örnek verilebilir.
 
 
-Paket sisteminin temel yapısı
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Paket sisteminin temel yapısı**
+---------------------------------
 
 Dağıtımlarda uygulamalar paketler halinde hazırlanır. Bu paketleri dağıtımda kullanabilmek için temel işlemler şunlardır;
 
@@ -47,8 +49,8 @@ Bazı dağıtımların kullandığı paket sistemeleri şunlardır.
 - ymp : Turkman Linux dağıtımının kullandığı paket sistemi.
 
 
-bps Paket Sistemi
------------------
+**bps Paket Sistemi**
+---------------------
 
 Bu dokümanda hazırlanan dağıtımın paket sistemi için ise bps(basit/basic/base paket sistemi) olarak ifade edeceğimiz paket sistemi adını kullandık. Bps paket sistemindeki beş temel işlemin nasıl yapılacağı ayrı başlıklar altında anlatılacaktır. Paket sistemi delemeli bir dil yerine bash script ile yapılacaktır. Bu dokumanı takip eden orta seviye bilgiye sahip olan linux kullanıcısı yapılan işlemleri anlaması amaçlandı.
 

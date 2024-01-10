@@ -19,8 +19,8 @@ Daha sonra paket içeriğini kök dizine kopyaladık.
 Daha sonra paket dosya listesini verilerin tutulduğu yere kopyaladık.
 Bu işlemden sonra paket kurulmuş oldu.
 
-bps Paket Kurma Scripti Tasarlama
-----------------------------------
+**bps Paket Kurma Scripti Tasarlama**
+-------------------------------------
 
 Hazırlanan dağıtımda paketlerin kurulması için  sırasıyla aşağıdaki işlem adımları yapılmalıdır.
 
@@ -39,8 +39,8 @@ Bu işlemler daha detaylandırılabilir. Bu işlemlerin detaylı olması paket s
 
 Burada basit seviyede kurulum yapan script kullanılmıştır. Detaylandırıldıkça doküman güncellenecektir. Kurulum scripti aşağıda görülmektedir.
 
-bpskur Scripti
-..............
+**bpskur** Scripti
+..................
 
 .. code-block:: shell
 	
@@ -89,8 +89,8 @@ bpskur Scripti
 
 
 
-bpskur Scriptini Kullanma
-.........................
+**bpskur** Scriptini Kullanma
+.............................
 
 Script iki parametre almaktadır. İlk parametre paket adı. İkinci parametremiz ise nereye kuracağını belirten hedef olmalıdır. Bu scripti kullanarak readline paketi aşağıdaki gibi kurulabilir. 
 
