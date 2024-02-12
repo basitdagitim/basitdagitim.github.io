@@ -5,7 +5,7 @@ Qemu Kullanımı
   	:width: 100
 
 Qemu Nedir?
-+++++++++++
+-----------
 
 Açık kaynaklı sanallaştırma aracıdır. 
 
@@ -21,7 +21,7 @@ Kaynak dosyalarından kurulum için;
 	
 	
 Sisteme Kurulum
-+++++++++++++++
+---------------
 
 .. code-block:: shell
 
@@ -48,12 +48,12 @@ Sisteme Kurulum
 	qemu-system-x86_64 -m 2G -cdrom etahta.iso          #sadece iso doayası ile çalıştırma
 
 Sistem Hızlandırılması
-++++++++++++++++++++++
+----------------------
 
 **--enable-kvm** eğer sistem disk ile çalıştırıldığında bu parametre eklenmezse yavaş çalışacaktır.
 
 Boot Menu Açma
-++++++++++++++
+--------------
 
 Sistemin diskten mi imajdan mı başlayacağını başlangıçta belilemek için boot menu gelmesini istersek aşağıdaki gibi komut satırına seçenek eklemeliyiz.
 	
@@ -62,19 +62,27 @@ Sistemin diskten mi imajdan mı başlayacağını başlangıçta belilemek için
 	qemu-system-x86_64 --enable-kvm -cdrom distro.iso -hda disk.img -m 4G -boot menu=on  
 
 Uefi kurulum için:
-++++++++++++++++++
+------------------
 
 sudo apt-get install ovmf
 
 qemu-system-x86_64 --enable-kvm -bios /usr/share/ovmf/OVMF.fd -cdrom distro.iso -hda disk.img -m 4G -boot menu=on   
 
 qemu Host Erişimi:
-++++++++++++++++++
+------------------
 
 kendi ipsi:10.0.2.15 
 
 ana bilgisayar 10.0.0.2 olarak ayarlıyor.
 
+vmlinuz ve initrd
+-----------------
+Daha sonra da qemu kullanarak test edelim.
+
+.. code-block:: shell
+
+	qemu-system-x86_64 --enable-kvm -kernel /boot/vmlinuz-5.17 -initrd /home/deneme/initrd.img -append "quiet" -m 512m
+	
 Kaynak:
 | https://www.ubuntubuzz.com/2021/04/how-to-boot-uefi-on-qemu.html  
 
