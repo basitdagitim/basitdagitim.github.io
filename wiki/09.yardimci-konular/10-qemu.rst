@@ -82,7 +82,10 @@ Daha sonra da qemu kullanarak test edelim.
 .. code-block:: shell
 
 	qemu-system-x86_64 --enable-kvm -kernel /boot/vmlinuz-5.17 -initrd /home/deneme/initrd.img -append "quiet" -m 512m
-	
+qemu Terminal Yönlendirmesi
+---------------------------	
+qemu-system-x86_64 --enable-kvm -kernel vmlinuz -initrd initrd.img -m 3G -serial stdio -append "console=ttyS0"	
+
 Kaynak:
 | https://www.ubuntubuzz.com/2021/04/how-to-boot-uefi-on-qemu.html  
 
